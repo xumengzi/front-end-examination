@@ -1,0 +1,14 @@
+{
+  "title": "front-end-examination",
+  "author": "xumeng",
+  "description": "考试题库",
+  "links": {
+    "sidebar": {
+      "github": "https://github.com/xumengzi/front-end-examination",
+      "xui": "https://docs.xumeng.ink/book/"
+    }
+  },
+  "plugins": [
+    "code"
+  ]
+}
