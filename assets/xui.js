@@ -903,7 +903,7 @@ include most functions and styles etc.
       const opts = Object.assign({}, defaults, arguments[0]);
       let tar = document.createElement('div');
       tar.innerHTML = `
-            <div class="xui_content">
+            <div class="xui_prompt_content">
               ${opts.isShowClose ? `<span class="xui_close"></span>` : ``}
               <div class="xui_text">
                 <div class="xui_title"><span>${opts.tips}</span></div>
@@ -918,7 +918,7 @@ include most functions and styles etc.
       tar.classList.add('xui_prompt');
       document.body.appendChild(tar);
       //callback
-      document.querySelector('.xui_content').addEventListener('click', (e) => {
+      document.querySelector('.xui_prompt_content').addEventListener('click', (e) => {
         let tar = e.target.classList;
         if (tar.contains('xui_close') || tar.contains('xui_cancel')) {
           this.deleteEle('.xui_prompt');

@@ -107,7 +107,7 @@ body {
   align-items: center;
 }
 
-.xui_content {
+.xui_prompt_content {
   position: relative;
 }
 
@@ -518,7 +518,7 @@ button.xui_btn:disabled {
   z-index: 99999;
 }
 
-.xui_prompt .xui_content {
+.xui_prompt .xui_prompt_content {
   position: relative;
   width: 500px;
   margin: 0 auto;
