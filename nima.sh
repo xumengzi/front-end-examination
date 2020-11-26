@@ -1,0 +1,1 @@
+rm -fr _book && rm -fr book && gitbook build && mv _book book && git add . && git commit -m 'add' && git push
