@@ -2742,71 +2742,74 @@ here is a pullLoad plugin
 })(window);
 
 
-class waterMark {
-  constructor(options) {
-    let defauleOpts = {
-      title: '水印',
-      color: '#ccc',
-      fontSize: 14,
-      rotate: '-20',
-      width: 200,
-      height: 200,
-    };
-    this.opts = Object.assign({}, defauleOpts, options);
-    this.renderHtml();
-    this.event();
-  }
-  event() {
-    window.onresize = () => {
+
+
+;(function (w){
+  class waterMark {
+    constructor(options) {
+      let defauleOpts = {
+        title: '水印',
+        color: '#ccc',
+        fontSize: 14,
+        rotate: '-20',
+        width: 200,
+        height: 200,
+      };
+      this.opts = Object.assign({}, defauleOpts, options);
       this.renderHtml();
+      this.event();
+    }
+    event() {
+      window.onresize = () => {
+        this.renderHtml();
+      }
+    }
+    renderHtml() {
+      document.querySelector('.water-mark-content') && document.querySelector('.water-mark-content').remove();
+      const { title, color, fontSize, rotate, width, height } = this.opts;
+      let w = document.body.offsetWidth;
+      let h = document.body.offsetHeight;
+      let spans = '';
+      let counts = Math.round(w * h / (width * height));
+      console.log(counts);
+      for (let i = 0; i < counts; i++) {
+        spans += `
+                  <span style="
+                          color: ${color}; 
+                          width: ${width}px;
+                          height: ${height}px;
+                          font-size: ${fontSize}px;
+                          display: flex;
+                          justify-content: center;
+                          align-items: center;
+                          transform: rotate(${rotate}deg)
+                      ">
+                      ${title}
+                  </span>`;
+      };
+      let con = document.createElement('div');
+      con.innerHTML = spans;
+      con.classList.add('water-mark-content');
+      con.style = `
+                      position: fixed;
+                      left: 0;
+                      right: 0;
+                      top: 0;
+                      bottom: 0;
+                      padding: 20px;
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      flex-wrap: wrap;
+                      z-index: 9999;
+                      pointer-events: none;
+                      `;
+
+      document.body.append(con);
     }
   }
-  renderHtml() {
-    document.querySelector('.water-mark-content') && document.querySelector('.water-mark-content').remove();
-    const { title, color, fontSize, rotate, width, height } = this.opts;
-    let w = document.body.offsetWidth;
-    let h = document.body.offsetHeight;
-    let spans = '';
-    let counts = Math.round(w * h / (width * height));
-    console.log(counts);
-    for (let i = 0; i < counts; i++) {
-      spans += `
-                <span style="
-                        color: ${color}; 
-                        width: ${width}px;
-                        height: ${height}px;
-                        font-size: ${fontSize}px;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        transform: rotate(${rotate}deg)
-                    ">
-                    ${title}
-                </span>`;
-    };
-    let con = document.createElement('div');
-    con.innerHTML = spans;
-    con.classList.add('water-mark-content');
-    con.style = `
-                    position: fixed;
-                    left: 0;
-                    right: 0;
-                    top: 0;
-                    bottom: 0;
-                    padding: 20px;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    flex-wrap: wrap;
-                    z-index: 9999;
-                    pointer-events: none;
-                    `;
-
-    document.body.append(con);
-  }
-}
-
-// new waterMark({
-//   title: `xui v${xuiVersion}`,
-//   color: '#e0e0e0',
-// })
+  new waterMark({
+    title: `xui v${xuiVersion}`,
+    color: 'rgb(240 240 240)',
+  })
+})(window);

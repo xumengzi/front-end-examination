@@ -1,17 +1,19 @@
 (function (w) {
 	// 生成考试函数
-	let dom = document.querySelector("#junior-content");
+	var dom = document.querySelector("#chapter-content");
+	var questionList = questionObj.questionList;
+	var title = questionObj.title;
 	function render() {
-		let str = "";
-		juniorList.forEach((item) => {
-			const { id, isMul, type, topic, answer, content, options, point } = item;
-			let opts = typeRender(id, type, options);
-			let cont = "";
+		var str = `<h2>${title}</h2>`;
+		questionList.forEach((item) => {
+			var { id, isMul, type, topic, answer, content, options, point } = item;
+			var opts = typeRender(id, type, options);
+			var cont = "";
 			if (content) {
 				cont = `<pre><code>${content}</code></pre>`;
 			}
 			str += `<div class='exam-item'>
-      ${id + 1}. ${topic}: (${point}分)
+      ${id + 1}. ${topic.replace(/([A-Za-z]\w*)/g, '<code>$1</code>')}: (${point}分)
 
       ${cont}
 
@@ -22,6 +24,7 @@
     `;
 		});
 		if (dom) {
+			str += '<button class="xui_btn xui_btn_default chapter-submit">提交</button>'
 			dom.innerHTML = str;
 		} else {
 			xui.message("题目生成失败, 请重试!", 2000);
@@ -30,7 +33,7 @@
 
 	// 渲染题目 类别区分
 	function typeRender(id, type, options) {
-		let opts = "";
+		var opts = "";
 		if (type === "radio") {
 			options.forEach((ele, inx) => {
 				opts += `
@@ -49,8 +52,8 @@
 		if (type === "checkbox") {
 			options.forEach((ele, inx) => {
 				opts += `
-          <input class="xui_checkbox" id="checkbox_${inx}_${id}" value="${ele}" type="checkbox" name="checkbox" />
-          <label for="checkbox_${inx}_${id}" class="xui_checkbox_box">${ele}</label>
+          <div><input class="xui_checkbox" id="checkbox_${inx}_${id}" value="${ele}" type="checkbox" name="checkbox" />
+          <label for="checkbox_${inx}_${id}" class="xui_checkbox_box">${ele}</label></div>
         `;
 			});
 		}
@@ -67,19 +70,19 @@
 	function calculate() {
 		if (dom) {
 			// 获取题目
-			let items = [...dom.querySelectorAll('.items')];
+			var items = [...dom.querySelectorAll('.items')];
 			// 把题目的结果放到一个对象上
-			let result = {};
-			let total = 0;
+			var result = {};
+			var total = 0;
 			items.forEach(item => {
-				let attr = item.getAttribute('data-type');
-				let isMul = item.getAttribute('data-isMul');
-				let id = item.getAttribute('data-id');
-				let obj = juniorList[id];
-				let val = '';
+				var attr = item.getAttribute('data-type');
+				var isMul = item.getAttribute('data-isMul');
+				var id = item.getAttribute('data-id');
+				var obj = questionList[id];
+				var val = '';
 				if (attr === "radio" || attr === 'checkbox') {
-					let list = [...item.querySelectorAll('input:checked')];
-					let res = []
+					var list = [...item.querySelectorAll('input:checked')];
+					var res = []
 					list.forEach(ele => {
 						res.push(ele.value)
 					})
@@ -124,28 +127,31 @@
 		return ele.classList.remove(name)
 	}
 
-	var btn = document.querySelector(".junior-submit");
-	btn.addEventListener("click", () => {
-		xui.prompt({
-			tips: "提示",
-			text: "确定交卷吗?",
-			isShowClose: true,
-			confirmBtn: {
-				text: "ok",
-				fn() {
-					// 获取答案
-					let answer = calculate();
-					xui.message("您的分数为: " + answer + " 分", 2000);
+	function event(){
+		var btn = dom.querySelector(".chapter-submit");
+		btn.addEventListener("click", () => {
+			xui.prompt({
+				tips: "提示",
+				text: "确定交卷吗?",
+				isShowClose: true,
+				confirmBtn: {
+					text: "ok",
+					fn() {
+						// 获取答案
+						var answer = calculate();
+						xui.message("您的分数为: " + answer + " 分", 2000);
+					},
 				},
-			},
-			cancelBtn: {
-				text: "cancel",
-				fn() {
-					xui.message("别再看了, 直接提交吧!");
+				cancelBtn: {
+					text: "cancel",
+					fn() {
+						xui.message("别再看了, 直接提交吧!");
+					},
 				},
-			},
+			});
 		});
-	});
+	}
 
 	render();
+	event();
 })(window);
