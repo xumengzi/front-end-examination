@@ -33,3 +33,5 @@ How many codes must a man edit before you call him a master?
 >聊乘化以归尽，乐夫天命复奚疑！
 
 >——节选自陶渊  《归去来兮辞》
+
+rm -fr _book && rm -fr book && gitbook build && mv _book book && git add . && git commit -m 'add' && git push
