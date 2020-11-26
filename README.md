@@ -34,4 +34,4 @@ How many codes must a man edit before you call him a master?
 
 >——节选自陶渊  《归去来兮辞》
 
-rm -fr _book && rm -fr book && gitbook build && mv _book book && git add . && git commit -m 'add' && git push
+>发布: 终端运行 ./build.sh '提交的描述性文字'
