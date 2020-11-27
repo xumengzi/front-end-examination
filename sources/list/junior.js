@@ -41,6 +41,56 @@ var questionObj = {
 			answer: "DIY",
 			point: 5,
 		},
+		{
+			isMul: "multiple",
+			type: "textarea",
+			topic: "cookie,session,localstorage的异同点",
+			keywords: 'cookie,session,localstorage',
+			answer: "DIY",
+			point: 10,
+		},
+		{
+			isMul: "multiple",
+			type: "textarea",
+			topic: "Vue和React的生命周期",
+			keywords: 'vue,react',
+			answer: "DIY",
+			point: 10,
+		},
+		{
+			isMul: "multiple",
+			type: "textarea",
+			topic: "Vue和React组件的传值方法",
+			keywords: 'vue,react,传值',
+			answer: "DIY",
+			point: 10,
+		},
+		{
+			isMul: "multiple",
+			type: "textarea",
+			topic: "call和apply的异同",
+			keywords: 'call,apply',
+			answer: "DIY",
+			point: 10,
+		},
+		{
+			isMul: "multiple",
+			type: "textarea",
+			topic: "写一个函数, 实现数组去重",
+			keywords: '数组去重',
+			answer: "1,2,3,4,5,6",
+			point: 8,
+			isExecuted: true,
+			content: `var arr = [1, 2, 3, 3, 3, 4, 4, 5] // => [1, 2, 3, 4, 5, 6]`
+		},
+		{
+			isMul: "multiple",
+			type: "textarea",
+			topic: "请说说你的职业规划",
+			keywords: '职业规划',
+			answer: "DIY",
+			point: 10,
+		},
 	]
 }
 

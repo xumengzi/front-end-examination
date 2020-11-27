@@ -16,7 +16,7 @@
 				cont = `<pre><code>${content}</code></pre>`;
 			}
 			str += `<div class='exam-item'>
-      ${id + 1}. ${topic.replace(/([A-Za-z]\w*)/g, '<code>$1</code>')}: (${point}分)
+      ${id + 1}. ${topic.replace(/([A-Za-z]\w*)/g, '<code>$1</code>')} (${point}分)
 
       ${cont}
 

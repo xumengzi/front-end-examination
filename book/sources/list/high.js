@@ -115,6 +115,22 @@ var questionObj = {
 			answer: "DIY",
 			point: 10,
 		},
+		{
+			isMul: "multiple",
+			type: "textarea",
+			topic: "试着描述一下react native, flutter, weex等的异同",
+			keywords: 'react native, flutter, weex',
+			answer: "DIY",
+			point: 10,
+		},
+		{
+			isMul: "multiple",
+			type: "textarea",
+			topic: "请说说你的职业规划",
+			keywords: '职业规划',
+			answer: "DIY",
+			point: 10,
+		},
 	]
 }
 
