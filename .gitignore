@@ -9,3 +9,9 @@ node_modules
 # _book
 
 # eBook build output
+
+# 其他命令
+serve.sh
+build.sh
+LICENSE
+CNAME
