@@ -5,11 +5,14 @@
 	var title = questionObj.title;
 	function render() {
 		var str = `<h2>${title}</h2>`;
-		questionList.forEach((item) => {
-			var { id, isMul, type, topic, answer, content, options, point } = item;
+		questionList.forEach((item, index) => {
+			var { isMul, type, topic, answer, content, options, point } = item;
+			var id = index;
 			var opts = typeRender(id, type, options);
 			var cont = "";
 			if (content) {
+				content = content.replace(/</g, '&lt;')
+				content = content.replace(/>/g, '&gt;')
 				cont = `<pre><code>${content}</code></pre>`;
 			}
 			str += `<div class='exam-item'>
@@ -109,9 +112,12 @@
 							removeClass(item.parentElement, 'error')
 							addClass(item.parentElement, 'bingo')
 						}
+					}else if(obj.answer === 'DIY'){
+						addClass(item.parentElement, 'diy')
+					}else{
+						removeClass(item.parentElement, 'bingo')
+						addClass(item.parentElement, 'error')
 					}
-					removeClass(item.parentElement, 'bingo')
-					addClass(item.parentElement, 'error')
 				}
 			});
 			return total;

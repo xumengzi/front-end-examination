@@ -23,7 +23,7 @@ body {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
 }
 
-.bingo::after, .error::after {
+.bingo::after, .error::after, .diy::after, .diy::before {
   position: absolute;
   right: 4px;
   top: 0;
@@ -36,6 +36,30 @@ body {
 .bingo::after {
   content: '√';
   color: rgb(0 128 0);
+}
+
+.diy::after {
+  content: 'DIY';
+  color: #E6A23C;
+  font-size: 26px;
+  line-height: 26px;
+}
+
+.diy::before {
+  content: '需要你去网上查找相关资料';
+  right: 0;
+  top: 50%;
+  width: 100px;
+  transform: translateX(100%) translateY(-50%);
+  color: #E6A23C;
+  font-size: 15px;
+  line-height: 20px;
+  transition: transform .3s ease-in-out;
+  z-index: 99;
+}
+
+.diy:hover::before {
+  transform: translateX(-10%) translateY(-50%);
 }
 
 .error:after {

@@ -4,14 +4,14 @@ var questionObj = {
 	title: "中级前端面试题",
 	questionList: [
 		{
-			id: 0,
 			isMul: "multiple",
 			type: "textarea",
-			topic: "简述script标签上的defer和async标志的异同",
-			answer: "ignore",
+			topic: "简述以下3段script标签所产生的效果和影响",
+			answer: "DIY",
 			point: 5,
-			isExecuted: true,
-			content: `var arr = [1, [2, 3], [4, [5, 6]]]; // => [1, 2, 3, 4, 5, 6]`,
+			content: `<script src="a.js"></script>
+<script defer src="b.js"></script>
+<script async src="c.js"></script>`,
 		},
 	]
 }

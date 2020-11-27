@@ -3,7 +3,7 @@
 
 ## 项目名称: `front-end-examination`
 
-* 简介: a front-end-examination for you
+* 简介: 前端考试题集, 分为: 初, 中, 高级. 分别有选择题,填空题,编程题等, 部分试卷支持打分.
 
 ##### 本项目包含四个模块:
 * [1.初级](junior/README.md)
@@ -12,7 +12,18 @@
 
 ***
 
+#### 如何开发?
+```
+./serve.sh  => http://localhost:4000/
+```
+
+#### 如何发布?
+```
+./build.sh '提交的描述性文字'
+```
+
 ##### 个人项目,如有问题还请指出,不胜感激.
+
 ##### 欢迎不吝赐教
 ###### 联系我: *xumeng0611@gmail.com*
 
@@ -33,5 +44,3 @@ How many codes must a man edit before you call him a master?
 >聊乘化以归尽，乐夫天命复奚疑！
 
 >——节选自陶渊  《归去来兮辞》
-
->发布: 终端运行 ./build.sh '提交的描述性文字'
