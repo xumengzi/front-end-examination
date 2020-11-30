@@ -32,6 +32,14 @@ var questionObj = {
 		{
 			isMul: "multiple",
 			type: "textarea",
+			topic: "重绘和重排的异同点, 哪个更耗性能",
+			keywords: '重绘,重排',
+			answer: "DIY",
+			point: 8,
+		},
+		{
+			isMul: "multiple",
+			type: "textarea",
 			topic: "require和import的异同",
 			keywords: 'require,import',
 			answer: "DIY",

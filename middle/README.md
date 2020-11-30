@@ -1,3 +1,7 @@
+
+<link rel="stylesheet" type="text/css" href="../assets/xui.css">
+<script type="text/javascript" src="../assets/xui.js"></script>
+
 ## 中级前端面试题
 
 1. 选择题(分单选/多选)
