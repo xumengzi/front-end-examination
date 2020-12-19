@@ -3,8 +3,9 @@
 	var dom = document.querySelector("#chapter-content");
 	var questionList = questionObj.questionList;
 	var title = questionObj.title;
+	var tips = questionObj.tips;
 	function render() {
-		var str = `<h2>${title}</h2>`;
+		var str = `<h2>${title}</h2><h4 style="color:red;">${tips}</h4>`;
 		questionList.forEach((item, index) => {
 			var { isMul, type, topic, answer, content, options, point } = item;
 			var id = index;
@@ -111,6 +112,9 @@
 							total += obj.point;
 							removeClass(item.parentElement, 'error')
 							addClass(item.parentElement, 'bingo')
+						}else{
+							removeClass(item.parentElement, 'bingo')
+							addClass(item.parentElement, 'error')
 						}
 					}else if(obj.answer === 'DIY'){
 						addClass(item.parentElement, 'diy')

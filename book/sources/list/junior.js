@@ -2,6 +2,7 @@ window.questionObj = null;
 
 var questionObj = {
 	title: "初级前端面试题",
+	tips: '大题无法判断正确与否, 请自行前往确认!',
 	questionList: [
 		{
 			isMul: "multiple",
@@ -21,9 +22,16 @@ var questionObj = {
 		},
 		{
 			isMul: "multiple",
+			type: "textarea",
+			topic: "js执行的方式有哪些?",
+			answer: "DIY",
+			point: 5,
+		},
+		{
+			isMul: "multiple",
 			type: "input",
 			topic: "以下代码执行的结果是",
-			answer: "object",
+			answer: "[object Date]",
 			point: 2,
 			content: `console.log(Object.prototype.toString.call(new Date()))`,
 		},
@@ -43,9 +51,9 @@ var questionObj = {
 		},
 		{
 			isMul: "multiple",
-			type: "textarea",
+			type: "input",
 			topic: "请写出以下代码的执行结果",
-			answer: "1,2,3,4,5,6",
+			answer: "jack",
 			point: 5,
 			isExecuted: true,
 			content: `var fun = function(){
@@ -55,13 +63,14 @@ var questionObj = {
 	};
 }
 
-var p = new fun();`,
+var p = new fun();
+console.log(p.name)`,
 		},
 		{
 			isMul: "multiple",
-			type: "textarea",
+			type: "input",
 			topic: "请写出以下代码的执行结果",
-			answer: "1,2,3,4,5,6",
+			answer: "peter",
 			point: 5,
 			isExecuted: true,
 			content: `var fun = function(){
@@ -69,13 +78,14 @@ var p = new fun();`,
 	return 'jack';    
 }
 
-var p = new fun();`,
+var p = new fun();
+console.log(p.name)`,
 		},
 		{
 			isMul: "multiple",
-			type: "textarea",
+			type: "input",
 			topic: "请写出以下代码的执行结果",
-			answer: "1,2,3,4,5,6",
+			answer: "true",
 			point: 5,
 			isExecuted: true,
 			content: `var fun = function(){}
@@ -91,13 +101,14 @@ var a = new fun();
 var b = new fun();
 
 a.info.name = 'jack';
-b.info.name = 'tom';`,
+b.info.name = 'tom';
+console.log(a.info.name === b.info.name);`,
 		},
 		{
 			isMul: "multiple",
-			type: "textarea",
+			type: "input",
 			topic: "请写出以下代码的执行结果",
-			answer: "1,2,3,4,5,6",
+			answer: "false",
 			point: 5,
 			isExecuted: true,
 			content: `var fun = function(){}
@@ -111,13 +122,14 @@ var a = new fun();
 var b = new fun();
 
 a.name = 'jack';
-b.name = 'tom';`,
+b.name = 'tom';
+console.log(a.name === b.name);`,
 		},
 		{
 			isMul: "multiple",
-			type: "textarea",
+			type: "input",
 			topic: "请写出以下代码的执行结果",
-			answer: "1,2,3,4,5,6",
+			answer: "false",
 			point: 5,
 			isExecuted: true,
 			content: `var fun = function(){
@@ -138,7 +150,8 @@ var a = new fun();
 var b = new fun();
 
 a.info.name = 'jack';
-b.info.name = 'tom';`,
+b.info.name = 'tom';
+console.log(a.info.name === b.info.name);`,
 		},
 		{
 			isMul: "multiple",
@@ -176,7 +189,7 @@ b.info.name = 'tom';`,
 		{
 			isMul: "multiple",
 			type: "textarea",
-			topic: "事件代理的优缺点",
+			topic: "事件代理有哪些优缺点",
 			answer: "DIY",
 			point: 5,
 		},
@@ -201,6 +214,14 @@ b.info.name = 'tom';`,
 			type: "textarea",
 			topic: "cookie,session,localstorage的异同点",
 			keywords: 'cookie,session,localstorage',
+			answer: "DIY",
+			point: 10,
+		},
+		{
+			isMul: "multiple",
+			type: "textarea",
+			topic: "前端安全了解多少? 比如XSS, CROS",
+			keywords: 'XSS, CROS',
 			answer: "DIY",
 			point: 10,
 		},

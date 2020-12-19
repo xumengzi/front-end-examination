@@ -46,7 +46,7 @@ body {
 }
 
 .diy::before {
-  content: '需要你去网上查找相关资料';
+  content: '请自行查找相关资料';
   right: 0;
   top: 50%;
   width: 100px;

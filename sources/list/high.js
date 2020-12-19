@@ -2,6 +2,7 @@ window.questionObj = null;
 
 var questionObj = {
 	title: "高级前端面试题",
+	tips: '大题无法判断正确与否, 请自行前往确认!',
 	questionList: [
 		{
 			isMul: "multiple",
@@ -24,6 +25,14 @@ var questionObj = {
 			type: "textarea",
 			topic: "详细描述http的缓存机制",
 			keywords: 'http cache',
+			answer: "DIY",
+			point: 8,
+		},
+		{
+			isMul: "multiple",
+			type: "textarea",
+			topic: "为什么说http不安全, 而https安全?",
+			keywords: 'http,https',
 			answer: "DIY",
 			point: 8,
 		},
