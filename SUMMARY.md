@@ -1,6 +1,8 @@
 # Summary
 
 * [简介](README.md)
+* [0.测试](summary/README.md)
+    * [0.1 第一章](summary/programming.md)
 * [1.初级](junior/README.md)
     * [1.1 第一章](junior/chapter-1.md)
 * [2.中级](middle/README.md)

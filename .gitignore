@@ -15,3 +15,5 @@ serve.sh
 build.sh
 LICENSE
 CNAME
+
+npm install gitbook-cli -g
