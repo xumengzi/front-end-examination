@@ -369,9 +369,9 @@ continue
 ### 11.实现Promise
 continue
 
-### 12.实现Promise.all
-promise.all方法接收一个Promise的iterable类型（包括Array，map，set）的输入，并且只返回一个Promise实例，而输入的所有Promise的resolve回调的结果是一个数组。
-注意是所有的Promise都执行完毕才返回，如果其中任意一个reject执行，就会立刻抛出错误，并且reject的是第一个错误信息。
+### 12.实现`Promise.all`
+`Promise.all`方法接收一个`Promise`的`iterable`类型（包括`Array`，`Map`，`Set`）的输入，并且只返回一个`Promise`实例，而输入的所有`Promise`的`resolve`回调的结果是一个数组。
+注意是所有的`Promise`都执行完毕才返回，如果其中任意一个`reject`执行，就会立刻抛出错误，并且`reject`的是第一个错误信息。详见[Promise.all](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise/all)
 
 ```js
 // 官方例子
@@ -391,8 +391,8 @@ function isPromise(fn) {
     }
     return false;
 }
-// 我们模拟实现覆盖promise.all方法
-Promise.all = function(promiseList) {
+// 我们模拟实现覆盖`Promise.all`方法
+`Promise.all` = function(promiseList) {
     return new Promise(function(resolve, reject) {
         var result = [];
         var length = 0;
@@ -418,7 +418,7 @@ Promise.all = function(promiseList) {
         }
     });
 };
-Promise.all([promise1, promise2, promise3])
+`Promise.all`([promise1, promise2, promise3])
     .then(res => {
         console.log('res: ', res); // ['promise1', 'promise2', 'promise3']
     })
