@@ -365,3 +365,64 @@ continue
 
 ### 10.实现webpack里的loader
 continue
+
+### 11.实现Promise
+continue
+
+### 12.实现Promise.all
+promise.all方法接收一个Promise的iterable类型（包括Array，map，set）的输入，并且只返回一个Promise实例，而输入的所有Promise的resolve回调的结果是一个数组。
+注意是所有的Promise都执行完毕才返回，如果其中任意一个reject执行，就会立刻抛出错误，并且reject的是第一个错误信息。
+
+```js
+// 官方例子
+var promise1 = Promise.resolve('promise1');
+var promise2 = 'promise2';
+var promise3 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve('promise3');
+    },1000)
+})
+// 这个函数用来判断是不是promise
+function isPromise(fn) {
+    if((typeof fn === 'object' && fn !== null) || typeof fn === 'function') {
+        if(typeof fn.then === 'function') {
+            return true
+        }
+    }
+    return false;
+}
+// 我们模拟实现覆盖promise.all方法
+Promise.all = function(promiseList) {
+    return new Promise(function(resolve, reject) {
+        var result = [];
+        var length = 0;
+        function handlePromises(inx, value) {
+            result[inx] = value;
+            length++;
+            // 记住全部返回有值了，我们才resolve出去
+            if(length === promiseList.length) {
+                resolve(result);
+            }
+        };
+        for (let index = 0; index < promiseList.length; index++) {
+            var tempPromise = promiseList[index];
+            if(isPromise(tempPromise)) {
+                tempPromise.then(res => {
+                    handlePromises(index, res)
+                }).catch(err => {
+                    reject(err); // 只要有一个失败了，我们就reject出去
+                })
+            }else {
+                handlePromises(index, tempPromise);
+            }
+        }
+    });
+};
+Promise.all([promise1, promise2, promise3])
+    .then(res => {
+        console.log('res: ', res); // ['promise1', 'promise2', 'promise3']
+    })
+    .catch(err => {
+        console.log('err: ', err);
+    });
+```
