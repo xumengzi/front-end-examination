@@ -10,6 +10,6 @@ echo '改名'
 mv _book book
 
 echo '提交github'
-git add . && git commit -m $1 && git push
+git add . && git commit -m '提交' && git push
 
 echo '成功'

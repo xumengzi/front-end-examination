@@ -5,10 +5,12 @@
   "links": {
     "sidebar": {
       "github": "https://github.com/xumengzi/front-end-examination",
-      "xui": "https://docs.xumeng.ink/book/"
+      "xui": "https://docs.xumeng.life/book/"
     }
   },
   "plugins": [
-    "code"
+    "code",
+    "page-treeview",
+    "back-to-top-button"
   ]
 }
