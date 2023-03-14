@@ -361,10 +361,43 @@ document.addEventListener('mousemove', throttle(function(e){
 ```
 
 ### 9.实现webpack里的plugin
-continue
+一句话概括Plugin：可以在webpack构建的各个生命周期对文件进行更改。
+plugin的实现需要注意以下几个点：
+1. 必须是一个JS的类或者命名函数
+2. 在函数原型上有一个apply函数
+3. 在不同生命周期调用不同的函数进行操作，必要时调用`webpack`的回调
+
+这里有一个非常简单的例子，具体的例子见：
+```js
+class ExamplePlugin {
+    // 处理传进来的配置
+    constructor(options) {
+        this.options = Object.assgin({}, defaultOptions, options);
+    }
+
+    // 参数compiler对象
+    apply(compiler) {
+        compiler.hooks.emit.tap(
+            'ExamplePlugin',
+            (compilation, callback) => {
+                // compilation对象上有很多方法，比如可以获取当前编译的状态对象，添加模块
+                compilation.finish(() => {
+                    console.log('finish');
+                })
+                // compilation的钩子上也有很多方法
+                compilation.hooks.optimize.tap(pluginName, () => {
+                    console.log('资源已经优化完毕。')
+                });
+            }
+        )
+    }
+}
+module.exports = ExamplePlugin;
+```
 
 ### 10.实现webpack里的loader
-continue
+一句话概括loader：对模块的源代码进行转换的，比如scss转换成css，ts转换成js
+
 
 ### 11.实现Promise
 continue
@@ -425,4 +458,57 @@ function isPromise(fn) {
     .catch(err => {
         console.log('err: ', err);
     });
+```
+
+### 13.找到最大公共前缀
+一个数组内有N个字符串，请找到最大的公共前缀并返回，例如：`['aabc', 'aabcd', 'aabcder'] => 'aabc'`
+
+```js
+/*
+例子 ['aabc', 'aabcd', 'aabcder'] => 'aabc'
+*/ 
+/*
+核心思想：
+1.查找最大公共前缀，那么可以把第一个当成基准点
+2.然后去遍历数组的每一项，和基准点进行比较，如果匹配上了就++，并存到一个map里，最终这个map是{1: 个数, 2: 个数, 3: 个数}
+3.因为是找公共的，那么个数最少的就是我们需要拿到的值
+4.拿到值后对第一个字符串进行切割，并返回
+*/
+function findLargestCommonLetters(arr) {
+    if (!(Array.isArray(arr) && arr.length)) {
+        return '';
+    }
+    if (arr.length === 1) {
+        return arr[0];
+    }
+    var first = arr[0];
+    var tag = {};
+    var result = 0;
+    for (var index = 1; index < arr.length; index++) {
+        var z = arr[index];
+        var inx = 0;
+        tag[index] = 0;
+        while (inx < first.length) {
+            // charAt是字符串的方法，主要是判断第N位是什么字符
+            var p = first.charAt(inx);
+            var p1 = z.charAt(inx);
+            if (p === p1) {
+                inx++;
+                tag[index] = inx;
+            } else {
+                break;
+            }
+        }
+    };
+    result = Object.values(tag)
+    if (Array.isArray(result) && result.length) {
+        result = result.sort()[0] || 0;
+    }
+    return first.substr(0, result);
+};
+findLargestCommonLetters(['1a2bcdefg', 'a2bcdef']); // empty
+findLargestCommonLetters(['a', 'aa']); // a
+findLargestCommonLetters(['abc', 'ab']); // ab
+findLargestCommonLetters(['abc', 'abc']); // abc
+findLargestCommonLetters(['a', 'ab', 'abc', 'abcd']); // a
 ```
