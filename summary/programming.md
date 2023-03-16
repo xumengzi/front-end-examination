@@ -397,7 +397,10 @@ module.exports = ExamplePlugin;
 
 ### 10.实现webpack里的loader
 一句话概括loader：对模块的源代码进行转换的，比如scss转换成css，ts转换成js
+具体简介：* [0.3 webpack-loader解析](/summary/loader.md)
 
+### 11.webpack的打包原理
+continue
 
 ### 11.实现Promise
 continue
@@ -465,15 +468,15 @@ function isPromise(fn) {
 
 ```js
 /*
-例子 ['aabc', 'aabcd', 'aabcder'] => 'aabc'
-*/ 
+    例子 ['aabc', 'aabcd', 'aabcder'] => 'aabc'
+    */ 
 /*
-核心思想：
-1.查找最大公共前缀，那么可以把第一个当成基准点
-2.然后去遍历数组的每一项，和基准点进行比较，如果匹配上了就++，并存到一个map里，最终这个map是{1: 个数, 2: 个数, 3: 个数}
-3.因为是找公共的，那么个数最少的就是我们需要拿到的值
-4.拿到值后对第一个字符串进行切割，并返回
-*/
+    核心思想：
+    1.查找最大公共前缀，那么可以把第一个当成基准点
+    2.然后去遍历数组的每一项，和基准点进行比较，如果匹配上了就++，并存到一个map里，最终这个map是{1: 个数, 2: 个数, 3: 个数}
+    3.因为是找公共的，那么个数最少的就是我们需要拿到的值
+    4.拿到值后对第一个字符串进行切割，并返回
+    */
 function findLargestCommonLetters(arr) {
     if (!(Array.isArray(arr) && arr.length)) {
         return '';
@@ -511,4 +514,209 @@ findLargestCommonLetters(['a', 'aa']); // a
 findLargestCommonLetters(['abc', 'ab']); // ab
 findLargestCommonLetters(['abc', 'abc']); // abc
 findLargestCommonLetters(['a', 'ab', 'abc', 'abcd']); // a
+```
+
+### 14.请把一段虚拟dom转换成真实的dom
+核心思想：
+1. 因为结构是树形，那么必须用到递归
+2. 数组循环的时候，第一层需要用最外层的div来包裹，而二层，三层往后则需要递归放到一层生成的dom里
+```js
+var obj = [
+    {
+        tag: 'DIV',
+        attrs: {
+            id: 'a',
+            class: 'b'
+        },
+        text: 'nima',
+        children: [
+            {
+                tag: 'span',
+                text: '我去',
+                children: [
+                    {
+                        tag: 'a',
+                        attrs: {
+                            href: 'https://www.baidu.com/',
+                        },
+                        text: '百度',
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        tag: 'P',
+        text: '请问',
+    }
+];
+function render(arr) {
+    const content = document.createElement('div');
+    function _add(arr, bool) {
+        var tempDom = '';
+        arr.forEach((item, index) => {
+            tempDom = document.createElement(item.tag);
+            tempDom.innerHTML = item.text || '';
+            for(var i in item.attrs){
+                tempDom.setAttribute(i, item.attrs[i])
+            }
+            if (item.children && item.children.length) {
+                tempDom.appendChild(_add(item.children));
+            }
+            if(bool) {
+                content.appendChild(tempDom)
+            }
+        })
+        return tempDom
+    }
+    content.appendChild(_add(arr, true));
+    return content
+}
+
+var example = render(obj);
+/*
+<div>
+    <div id="a" class="b">
+        nima
+        <span>
+            我去<a href="https://www.baidu.com/">百度</a>
+        </span>
+    </div>
+    <p>请问</p>
+</div>
+*/ 
+```
+
+### 15.请回答下面函数的执行结果
+```js
+function Foo() {
+    log = function () {
+        console.log(1);
+    };
+    return this;
+}
+Foo.log = function () {
+    console.log(2);
+};
+Foo.prototype.log = function () {
+    console.log(3);
+};
+var log = function () {
+    console.log(4);
+};
+function log() {
+    console.log(5);
+}
+/*答案解析
+构造函数Foo上的log方法，这个就是Foo.log函数
+执行完毕打印1
+*/
+Foo.log();
+
+/*答案解析
+执行window方法上的log方法，看上述代码，由于var变量提升，最后log函数是log = function () {console.log(4);};
+执行完毕打印4
+*/
+log();
+
+/*答案解析
+构造函数执行完之后，返回了this，指向window，接着执行log函数
+执行完毕打印4
+*/
+Foo().log();
+
+/*答案解析
+注意上述Foo()执行完了之后，里面有个log函数
+执行完毕打印1
+*/
+log();
+
+/*答案解析
+运算符.的优先级比new操作符优先级高，相当于new (Foo.log)()
+执行完毕打印2
+*/
+new Foo.log();
+
+/*答案解析
+构造函数经过new了之后，再调用log函数就是原型上的log函数
+执行完毕打印3
+*/
+new Foo().log();
+```
+
+### 16.请回答以下代码执行结果
+
+```js
+var x = 0;
+var obj = {
+    x: 10,
+    bar() {
+        var x = 20;
+        console.log(this.x);
+    }
+};
+
+obj.bar() // this指向obj，执行完毕返回10
+var foo = obj.bar; // 将obj.bar赋值给foo函数
+foo() // 再调用foo函数时，this指向的是window，函数里的x是局部变量，打印0
+obj.bar.call(window) // call,apply,bind函数可以改变函数的this指向，指向传进去的第一个参数
+obj.bar.apply(obj) // 10
+foo.bind(obj)() // 10
+```
+
+### 16.请写出以下代码的返回值
+需要注意的点：
+1. js是单线程的语言
+2. 碰到一些浏览器的web api的时候，就会把这些任务放到一个专门处理这些任务的地方，也叫任务队列
+3. 只有等当前执行栈里为空了，才会把任务队列里的代码拿过来执行
+4. 以此类推。
+5. settimeout，setInterval，Ajax等属于宏任务
+6. promise的then，process的nexttick方法属于微任务，优先级比宏任务高
+
+```js
+console.log(1)
+setTimeout(()=> {
+    console.log(2)
+}, 1000)
+setTimeout(() => {
+    var p = new Promise((resolve, reject) => {
+        console.log(3)
+        resolve()
+        console.log(3.5)
+    }).then(() => {
+        console.log(4)
+    })
+    Promise.resolve().then(() => {
+        console.log(5)
+    })
+}, 0)
+setTimeout(() => {
+    Promise.resolve().then(() => {
+        console.log(6)
+    })
+}, 0)
+new Promise((resolve, reject) => {
+    console.log(7)
+    resolve()
+}).then(() => {
+    console.log(8)
+})
+Promise.resolve().then(() => {
+    console.log(9)
+})
+async function async1() {
+    await async2()
+    console.log(10)
+}
+async function async2() {
+    await async3()
+    console.log(11)
+}
+async function async3() {
+    console.log(12)
+}
+async1()
+console.log(13)
+
+// 1, 7, 12, 13, 8, 9, 11, 10, 3, 3.5, 4, 5, 6, 2
 ```
