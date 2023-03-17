@@ -428,7 +428,7 @@ function isPromise(fn) {
     return false;
 }
 // 我们模拟实现覆盖`Promise.all`方法
-`Promise.all` = function(promiseList) {
+Promise.all = function(promiseList) {
     return new Promise(function(resolve, reject) {
         var result = [];
         var length = 0;
@@ -454,7 +454,7 @@ function isPromise(fn) {
         }
     });
 };
-`Promise.all`([promise1, promise2, promise3])
+Promise.all([promise1, promise2, promise3])
     .then(res => {
         console.log('res: ', res); // ['promise1', 'promise2', 'promise3']
     })
@@ -719,4 +719,34 @@ async1()
 console.log(13)
 
 // 1, 7, 12, 13, 8, 9, 11, 10, 3, 3.5, 4, 5, 6, 2
+```
+
+### 17.请实现函数科里化（currying）
+
+```js
+function currying(fn) {
+    // 取到传进来的参数个数
+    var args = [...arguments].slice(1);
+    // 如果和fn.length相等（fn.length表示函数应该拿的参数个数，arguments则是实际的），那么直接调用fn方法执行
+    if(fn.length === args.length) {
+        return fn.apply(this, args)
+    }
+    // 这里处理不是上述的情形，需要用递归将参数push到args，直到和fn.length相等
+    function _curry(){
+        // 每次递归调用就push到参数数组里，直到和fn.length相等，那么直接执行即可
+        args.push(...arguments)
+        if(fn.length === args.length) {
+            return fn.apply(this, args)
+        }
+        return _curry;
+    }
+    return _curry();
+}
+function add(a, b, c) {
+    return a + b + c;
+}
+currying(add,1,2,3) // 6
+currying(add,1,2)(3) // 6
+currying(add)(1)(2)(3) // 6
+currying(add)(1,2,3) // 6
 ```
