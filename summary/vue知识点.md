@@ -35,7 +35,7 @@
 
 注意：新旧节点对比过程，不会对这两棵`Vnode`树进行修改，而是以比较的结果直接对 真实`DOM` 进行修改
 `Vue`的patch是即时的，并不是打包所有修改最后一起操作`DOM`（React则是将更新放入队列后集中处理）
-具体简介：* [0.5 virtualDom和diff算法](summary/virtualDom和diff算法.md)
+具体简介：[0.5 virtualDom和diff算法](/summary/virtualDom和diff算法.md)
 
 #### `vue`渲染过程
 1. 调用`compile`函数，生成`render`函数字符串，编译过程如下：
