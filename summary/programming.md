@@ -399,8 +399,8 @@ module.exports = ExamplePlugin;
 一句话概括loader：对模块的源代码进行转换的，比如scss转换成css，ts转换成js
 具体简介：* [0.3 webpack-loader解析](/summary/loader.md)
 
-### 11.webpack的打包原理
-continue
+### 11.webpack的Tree Shaking原理
+具体简介：* [0.3 webpack-loader解析](/summary/treeShaking.md)
 
 ### 11.实现Promise
 continue
@@ -749,4 +749,40 @@ currying(add,1,2,3) // 6
 currying(add,1,2)(3) // 6
 currying(add)(1)(2)(3) // 6
 currying(add)(1,2,3) // 6
+```
+
+### 18.请找出一串字符串里最长的回文串
+核心思想：
+1. 双循环，拿到某一个字符串，比如abc，然后进行倒序变成cba，判断这2个字符串是否相等
+2. 事先设置一个变量记录最大的回文串，并返回
+
+```js
+/*
+找出最长回文字符串，比如
+abcdca => cdc
+asdsa => asdsa
+abba => abba
+*/
+function findTargetStr(str) {
+    if(str.length <=1) {
+        return str;
+    }
+    var result = '';
+    var maxLength = 0;
+    for(var i = 0;i < str.length;i++){
+        for(var j = i;j <= str.length;j++){
+            var p = str.substring(i,j);
+            var reverseP = p.split('').reverse().join('');
+            if (p === reverseP) {
+                if (p.length >= maxLength) {
+                    maxLength = p.length;
+                    result = p;
+                }
+            }
+        }
+    }
+    return result;
+}
+var str = 'aaac';
+findTargetStr(str);
 ```
