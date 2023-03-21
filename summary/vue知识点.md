@@ -96,7 +96,6 @@ function defineReactive(target, key, value, enumerable) {
     },
     set(newVal) {
       console.log(`设置 ${key} 属性为: ${newVal}`); // 额外
-
       value = reactify(newVal);
     },
   });
@@ -108,7 +107,6 @@ function defineReactive(target, key, value, enumerable) {
 // 将对象 o 响应式化
 function reactify(o, vm) {
   let keys = Object.keys(o);
-
   for (let i = 0; i < keys.length; i++) {
     let key = keys[i]; // 属性名
     let value = o[key];

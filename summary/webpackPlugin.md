@@ -62,7 +62,6 @@ module.exports = {
 另外，可以使用[schma-utils](https://github.com/webpack/schema-utils)来校验传入插件的选项，比如
 ```js
 import { validate } from 'schma-utils';
-
 const options = {
     type: 'object',
     properties: {
@@ -79,7 +78,6 @@ export default class ExamplePlugin {
             bashDataPath: 'options',
         })
     }
-
     apply(compiler) {}
 }
 ```
@@ -181,10 +179,8 @@ class FileListPlugin {
         const defaultOptions = {
             outputName: 'assets.md',
         }
-    
         this.options = Object.assign({}, defaultOptions, params);
     }
-    
     /*
         apply函数是插件的灵魂，必须存在
         入参是compiler对象，这个对象方法非常多，提供了一些钩子函数，方便我们在webpack各个生命周期里做很多事情
@@ -198,7 +194,6 @@ class FileListPlugin {
             */
         compiler.hooks.thisCompilation.tap(pluginName, (compilation) => {
             // 绑定到资源处理流水线（assets processing pipeline）
-
             compilation.hooks.optimizeAssets.tap(
                 {
                     name: pluginName
@@ -214,7 +209,6 @@ class FileListPlugin {
                                     .map(fileName => '1. ' + fileName)
                                     .join('\r\n');
                     const content = `## here is ${pluginName}.md\r\n\r\n` + files;
-
                     /*
                         向compilation添加新的资源
                         这样webpack就会自动生成并输出到output目录

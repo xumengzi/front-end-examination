@@ -786,3 +786,118 @@ function findTargetStr(str) {
 var str = 'aaac';
 findTargetStr(str);
 ```
+
+### 19.使用JS实现深度优先遍历（DFS）
+深度优先遍历`DFS`，顾名思义在遍历树节点时可能深的搜索树的分支
+1. 自上而下遍历最深的分支节点
+2. 叶子节点再无子节点，回溯到父节点
+3. 从左向右，遍历父节点的其他子节点，重复步骤1直到叶子节点，然后重复步骤2直至完成整个树的遍历
+
+深度优先算法遍历采用栈`stack（first in last out）`先进后出的思想实现：
+```js
+// 这里有一棵树
+var tree = {
+    tag: '1',
+    children: [
+        {
+            tag: '2',
+            children: [
+                {
+                    tag: '3',
+                    children: [
+                        {
+                            tag: '4',
+                        },
+                        {
+                            tag: '5',
+                        }
+                    ],
+                },
+                {
+                    tag: '6'
+                }
+            ],
+        },
+        {
+            tag: '7'
+        },
+        {
+            tag: '8',
+            children: [
+                {
+                    tag: '9',
+                    children: [
+                        {
+                            tag: '10',
+                        },
+                        {
+                            tag: '11',
+                        }
+                    ],
+                },
+                {
+                    tag: '12',
+                }
+            ],
+        },
+        
+    ],
+};
+```
+
+```js
+// 采用递归的思想
+function dfsRecursion(treeList, result = []) {
+    treeList.forEach(item => {
+        result.push(item.tag);
+        if(item.children){
+            return dfsRecursion(item.children, result)
+        }
+    });
+    return result;
+}
+dfsRecursion([tree]).join('->') // 1->2->3->4->5->6->7->8->9->10->11->12
+```
+```js
+// 使用栈的思想
+function dfsStack(node){
+    var result = [];
+    var stack = [];
+    if(node){
+        stack.push(node);
+        while(stack.length){
+            var item = stack.pop();
+            result.push(item.tag);
+            while(item.children && item.children.length){
+                stack.push(item.children.pop())
+            }
+        }
+    }
+    return result;
+}
+dfsStack(tree).join('->'); // 1->2->3->4->5->6->7->8->9->10->11->12
+```
+
+### 20.使用JS实现广度优先遍历（BFS）
+广度优先则是从上到下，自左向右层层遍历，即先遍历父节点，再遍历子节点。采用队列`queue（fisrt in first out）`先进先出的思想实现
+```js
+// tree同上那棵树
+function bfsQueue(node) {
+    var result = [];
+    var queue = [];
+    if(node) {
+        queue.push(node);
+        while(queue.length) {
+            var item = queue.shift();
+            result.push(item.tag);
+            if(item.children) {
+                item.children.forEach(ele => {
+                    queue.push(ele);
+                });
+            };
+        }
+    }
+    return result
+};
+bfsQueue(tree).join('->'); // 1->2->7->8->3->6->9->12->4->5->10->11
+```
