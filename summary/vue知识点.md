@@ -65,7 +65,7 @@ function createKeyToOldIdx(children, beginIdx, endIdx) {
 }
 ```
 
-#### `vue`-router路由模式
+#### `vue-router`路由模式
 默认值是：`hash`（浏览器环境）| `abstract（node）`
 可选值：`hash` | history | `abstract`
 配置路由模式：
