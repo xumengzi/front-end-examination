@@ -20,9 +20,9 @@
 //     console.log(reason);
 // })
 /*
-promise 有3种状态：pending，fulfilled，rejected，
-pending可以转换成fulfilled或者rejected，但是不可逆
-*/
+    promise 有3种状态：pending，fulfilled，rejected，
+    pending可以转换成fulfilled或者rejected，但是不可逆
+    */
 class myPromise {
     // 先定义3个状态常量
     static PENDING = 'pending';
@@ -65,12 +65,14 @@ class myPromise {
         }
     }
     then(onFulfilled, onRejected) {
+        // 判断then里的函数是不是函数，以及处理一些异常
         onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : val => val;
         onRejected = typeof onRejected === 'function' ? onRejected : reason => {throw reason};
         if (this.promiseState === myPromise.PENDING) {
             this.onFulfilledCallbacks.push(onFulfilled);
             this.onRejectedCallbacks.push(onRejected);
         }
+        // 根据状态来执行对应函数
         if (this.promiseState === myPromise.FULFILLED) {
             onFulfilled(this.promiseResult)
         }

@@ -46,7 +46,7 @@
 3. 调用`patch`方法，对比新旧`vNode`对象，通过`DOM diff`算法来添加，修改删除真正的`DOM`元素
 
 #### `vue`生命周期
-见管网
+见官网
 
 #### `vue`的循环中，key的作用是什么
 `key`是给每一个`vNode`的唯一Id，依靠`key`，我们的`diff`操作能够更准确，更迅速。
@@ -139,5 +139,4 @@ function proxy(target, prop, key) {
     },
   });
 }
-
 ```

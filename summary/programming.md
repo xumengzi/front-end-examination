@@ -1,4 +1,4 @@
-### 1.模拟实现`call`函数
+### 模拟实现`call`函数
 `call`方法使用一个指定的`this`值和单独给出的一个或多个参数来调用一个函数。
 
 ##### [call](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/call) 函数实现效果
@@ -43,7 +43,7 @@ fn.customizeCall(obj, 3, 4); // 1-3-4
 fn.customizeCall(null, 3, 4); // 0-3-4
 ```
 
-### 2.模拟实现`apply`函数
+### 模拟实现`apply`函数
 `apply`方法调用一个具有给定`this`值的函数，以及以一个数组（或一个类数组对象）的形式提供的参数。
 
 ##### [apply](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/apply) 函数实现效果
@@ -87,7 +87,7 @@ fn.customizeApply(obj, [3, 4]); // 1-3-4
 fn.customizeApply(null, [3, 4]); // 0-3-4
 ```
 
-### 3.模拟实现`bind`函数
+### 模拟实现`bind`函数
 `bind` 方法创建一个新的函数，在`bind`被调用时，这个新函数的`this`被指定为`bind`的第一个参数，而其余参数将作为新函数的参数，供调用时使用。
 
 ##### [bind](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/bind) 函数实现效果
@@ -134,7 +134,7 @@ fn.customizeBind(obj, 3, 4)(); // 1-3-4
 fn.customizeBind(null, 3, 4)(); // 0-3-4
 ```
 
-### 4.模拟实现`new`函数
+### 模拟实现`new`函数
 
 `new`运算符创建一个用户定义的对象类型的实例或具有构造函数的内置对象的实例。
 ##### [new](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/new) 函数的实现效果
@@ -193,7 +193,7 @@ res.c // 3
 res.bar() // 6
 ```
 
-### 5.模拟实现`instanceof`函数
+### 模拟实现`instanceof`函数
 `instanceof`运算符用于检测构造函数的`prototype`属性是否出现在某个实例对象的原型链上。
 
 #### [instanceof](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/instanceof) 实现效果
@@ -235,7 +235,7 @@ customizeInstance(str, String); // true
 customizeInstance(num, Number); // true
 ```
 
-### 6.实现发布（publish）订阅（subscribe）模式函数
+### 实现发布（publish）订阅（subscribe）模式函数
 这种模式可以解耦一些代码，让发布者和订阅者互相隔离，让代码更加清晰易懂
 
 ```js
@@ -311,7 +311,7 @@ setTimeout(() => {
 }, 2000);
 ```
 
-### 7.实现`debounce`防抖函数
+### 实现`debounce`防抖函数
 防抖函数主要用在触发频率，次数非常多的地方，为了提高性能，我们可以做一下限制，尽量减少这种调用次数
 
 ```js
@@ -335,7 +335,7 @@ document.addEventListener('mousemove', debounce(function(e){
 }, 500), false);
 ```
 
-### 8.实现`throttle`节流函数
+### 实现`throttle`节流函数
 节流函数也是控制执行频率和次数，无论用户操作多少次，这个函数能够保证固定时间执行1次
 
 ```js
@@ -360,7 +360,7 @@ document.addEventListener('mousemove', throttle(function(e){
 }, 500), false);
 ```
 
-### 9.实现webpack里的plugin
+### 实现webpack里的plugin
 一句话概括Plugin：可以在webpack构建的各个生命周期对文件进行更改。
 plugin的实现需要注意以下几个点：
 1. 必须是一个JS的类或者命名函数
@@ -395,17 +395,17 @@ class ExamplePlugin {
 module.exports = ExamplePlugin;
 ```
 
-### 10.实现webpack里的loader
+### 实现webpack里的loader
 一句话概括loader：对模块的源代码进行转换的，比如scss转换成css，ts转换成js
 具体简介：* [0.3 webpack-loader解析](/summary/loader.md)
 
-### 11.webpack的Tree Shaking原理
+### webpack的Tree Shaking原理
 具体简介：* [0.3 webpack-loader解析](/summary/treeShaking.md)
 
-### 11.实现Promise
-continue
+### 实现Promise
+具体简介：* [0.6 promise解析](/summary/promise.md)
 
-### 12.实现`Promise.all`
+### 实现`Promise.all`
 `Promise.all`方法接收一个`Promise`的`iterable`类型（包括`Array`，`Map`，`Set`）的输入，并且只返回一个`Promise`实例，而输入的所有`Promise`的`resolve`回调的结果是一个数组。
 注意是所有的`Promise`都执行完毕才返回，如果其中任意一个`reject`执行，就会立刻抛出错误，并且`reject`的是第一个错误信息。详见[Promise.all](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise/all)
 
@@ -463,60 +463,7 @@ Promise.all([promise1, promise2, promise3])
     });
 ```
 
-### 13.找到最大公共前缀
-一个数组内有N个字符串，请找到最大的公共前缀并返回，例如：`['aabc', 'aabcd', 'aabcder'] => 'aabc'`
-
-```js
-/*
-    例子 ['aabc', 'aabcd', 'aabcder'] => 'aabc'
-    */ 
-/*
-    核心思想：
-    1.查找最大公共前缀，那么可以把第一个当成基准点
-    2.然后去遍历数组的每一项，和基准点进行比较，如果匹配上了就++，并存到一个map里，最终这个map是{1: 个数, 2: 个数, 3: 个数}
-    3.因为是找公共的，那么个数最少的就是我们需要拿到的值
-    4.拿到值后对第一个字符串进行切割，并返回
-    */
-function findLargestCommonLetters(arr) {
-    if (!(Array.isArray(arr) && arr.length)) {
-        return '';
-    }
-    if (arr.length === 1) {
-        return arr[0];
-    }
-    var first = arr[0];
-    var tag = {};
-    var result = 0;
-    for (var index = 1; index < arr.length; index++) {
-        var z = arr[index];
-        var inx = 0;
-        tag[index] = 0;
-        while (inx < first.length) {
-            // charAt是字符串的方法，主要是判断第N位是什么字符
-            var p = first.charAt(inx);
-            var p1 = z.charAt(inx);
-            if (p === p1) {
-                inx++;
-                tag[index] = inx;
-            } else {
-                break;
-            }
-        }
-    };
-    result = Object.values(tag)
-    if (Array.isArray(result) && result.length) {
-        result = result.sort()[0] || 0;
-    }
-    return first.substr(0, result);
-};
-findLargestCommonLetters(['1a2bcdefg', 'a2bcdef']); // empty
-findLargestCommonLetters(['a', 'aa']); // a
-findLargestCommonLetters(['abc', 'ab']); // ab
-findLargestCommonLetters(['abc', 'abc']); // abc
-findLargestCommonLetters(['a', 'ab', 'abc', 'abcd']); // a
-```
-
-### 14.请把一段虚拟dom转换成真实的dom
+### 请把一段虚拟dom转换成真实的dom
 核心思想：
 1. 因为结构是树形，那么必须用到递归
 2. 数组循环的时候，第一层需要用最外层的div来包裹，而二层，三层往后则需要递归放到一层生成的dom里
@@ -587,7 +534,7 @@ var example = render(obj);
 */ 
 ```
 
-### 15.请回答下面函数的执行结果
+### 请回答下面函数的执行结果
 ```js
 function Foo() {
     log = function () {
@@ -644,7 +591,7 @@ new Foo.log();
 new Foo().log();
 ```
 
-### 16.请回答以下代码执行结果
+### 请回答以下代码执行结果
 
 ```js
 var x = 0;
@@ -721,7 +668,7 @@ console.log(13)
 // 1, 7, 12, 13, 8, 9, 11, 10, 3, 3.5, 4, 5, 6, 2
 ```
 
-### 17.请实现函数科里化（currying）
+### 请实现函数科里化（currying）
 
 ```js
 function currying(fn) {
@@ -751,43 +698,7 @@ currying(add)(1)(2)(3) // 6
 currying(add)(1,2,3) // 6
 ```
 
-### 18.请找出一串字符串里最长的回文串
-核心思想：
-1. 双循环，拿到某一个字符串，比如abc，然后进行倒序变成cba，判断这2个字符串是否相等
-2. 事先设置一个变量记录最大的回文串，并返回
-
-```js
-/*
-找出最长回文字符串，比如
-abcdca => cdc
-asdsa => asdsa
-abba => abba
-*/
-function findTargetStr(str) {
-    if(str.length <=1) {
-        return str;
-    }
-    var result = '';
-    var maxLength = 0;
-    for(var i = 0;i < str.length;i++){
-        for(var j = i;j <= str.length;j++){
-            var p = str.substring(i,j);
-            var reverseP = p.split('').reverse().join('');
-            if (p === reverseP) {
-                if (p.length >= maxLength) {
-                    maxLength = p.length;
-                    result = p;
-                }
-            }
-        }
-    }
-    return result;
-}
-var str = 'aaac';
-findTargetStr(str);
-```
-
-### 19.使用JS实现深度优先遍历（DFS）
+### 使用JS实现深度优先遍历（DFS）
 深度优先遍历`DFS`，顾名思义在遍历树节点时可能深的搜索树的分支
 ![](../assets/tree.jpg)
 1. 自上而下遍历最深的分支节点
@@ -879,7 +790,7 @@ function dfsStack(node){
 dfsStack(tree).join('->'); // 1->2->3->4->5->6->7->8->9->10->11->12
 ```
 
-### 20.使用JS实现广度优先遍历（BFS）
+### 使用JS实现广度优先遍历（BFS）
 广度优先则是从上到下，自左向右层层遍历，即先遍历父节点，再遍历子节点。采用队列`queue（fisrt in first out）`先进先出的思想实现
 ```js
 // tree同上那棵树
