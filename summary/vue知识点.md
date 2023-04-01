@@ -6,14 +6,14 @@
 3. 高阶函数：一个函数的参数是一个函数，该函数对参数进行加工从而得到了一个新函数，这个加工过后的函数就是高阶函数
 
 #### `vue`响应式系统
-`vue`初始化的时候，会用`Object.defineProperty`函数给data中每一个属性添加getter，setter，同时创建dep和watcher进行
-依赖收集和派发更新，最后通过diff算法对比新老vnode差异，通过patch及时更新DOM
+`vue`初始化的时候，会用`Object.defineProperty`函数给data中每一个属性添加`getter，setter`，同时创建`dep`和`watcher`进行
+依赖收集和派发更新，最后通过`diff`算法对比新老`vnode`差异，通过`patch`及时更新`DOM`
 
 #### `vue`的数据频繁变化，为何只会更新一次
 1. 检测到数据变化
 2. 开启一个队列
 3. 再同一事件循环里缓冲所有的数据改变
-4. 如果同一个watcher被多次触发，那么只会被推入队列一次，所以就只会执行一次
+4. 如果同一个`watcher`被多次触发，那么只会被推入队列一次，所以就只会执行一次
 
 #### `Object.defineProperty`的缺陷
 数组的`length`属性被初始化`configurable:false`，就变成不可枚举了，然后就没法通过get/set来监听`length`了。
@@ -21,7 +21,7 @@
 而普通对象还是使用`Object.defineProperty`添加`set/get`来监听
 
 #### `vue`.nextTick的原理
-在下次DOM更新循环结束之后执行延迟回调。再修改数据之后立即使用这个方法，获取更新后的DOM
+在下次`DOM`更新循环结束之后执行延迟回调。再修改数据之后立即使用这个方法，获取更新后的`DOM`
 源码实现是通过微/宏任务来实现的。`Promise > Mutation Observer > setImmediate > setTimeout`
 
 #### `vue diff` 算法
@@ -34,7 +34,7 @@
 3. 最后找不到，才会去新建删除节点，保底处理
 
 注意：新旧节点对比过程，不会对这两棵`Vnode`树进行修改，而是以比较的结果直接对 真实`DOM` 进行修改
-`Vue`的patch是即时的，并不是打包所有修改最后一起操作`DOM`（React则是将更新放入队列后集中处理）
+`Vue`的`patch`是即时的，并不是打包所有修改最后一起操作`DOM`（React则是将更新放入队列后集中处理）
 具体简介：[0.5 virtualDom和diff算法](/summary/virtualDom和diff算法.md)
 
 #### `vue`渲染过程
@@ -140,3 +140,17 @@ function proxy(target, prop, key) {
   });
 }
 ```
+
+#### 为什么this.$nextTick里能获取到更新后的dom
+调用this.$nextTick方法其实就是调用vue里的nextTick函数，再异步队列里执行回调函数。根据先进先出的原则，修改data触发的更新异步队列会先执行，执行完后dom会更新渲染。接下来再执行this.$nextTick里的回调函数，所以就能获取更新后的dom元素了。
+```js
+// 我们使用 this.$nextTick 其实就是调用 nextTick 方法
+Vue.prototype.$nextTick = function (fn: Function) {
+  return nextTick(fn, this);
+};
+```
+总结`vue`异步更新原理
+1. 修改`vue`里的`data`时，就会触发所有和这个`data`相关的`watcher`进行更新
+2. 首先，会将所有的`watcher`加入到队列`Queue`
+3. 然后，调用`nextTick`方法，执行异步任务
+4. 再异步任务的回调中，对`Queue`中的`watcher`进行排序，然后执行`DOM`更新

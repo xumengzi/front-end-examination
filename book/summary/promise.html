@@ -1,0 +1,579 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>0.7 promise解析 · front-end-examination</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="xumeng">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-treeview/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="algorithm.html" />
+    
+    
+    <link rel="prev" href="virtualDom和diff算法.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+    
+        
+        <li>
+            <a href="https://github.com/xumengzi/front-end-examination" target="_blank" class="custom-link">github</a>
+        </li>
+    
+        
+        <li>
+            <a href="https://docs.xumeng.life/book/" target="_blank" class="custom-link">xui</a>
+        </li>
+    
+    
+
+    
+    <li class="divider"></li>
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    0.测试
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="programming.html">
+            
+                <a href="programming.html">
+            
+                    
+                    0.1 核心编程题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="webpackPlugin.html">
+            
+                <a href="webpackPlugin.html">
+            
+                    
+                    0.2 webpack-Plugin解析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="loader.html">
+            
+                <a href="loader.html">
+            
+                    
+                    0.3 webpack-loader解析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="treeShaking.html">
+            
+                <a href="treeShaking.html">
+            
+                    
+                    0.4 tree-shaking
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="vue知识点.html">
+            
+                <a href="vue知识点.html">
+            
+                    
+                    0.5 vue知识点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="virtualDom和diff算法.html">
+            
+                <a href="virtualDom和diff算法.html">
+            
+                    
+                    0.6 virtualDom和diff算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.7" data-path="promise.html">
+            
+                <a href="promise.html">
+            
+                    
+                    0.7 promise解析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="algorithm.html">
+            
+                <a href="algorithm.html">
+            
+                    
+                    0.8 算法题解析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../junior/">
+            
+                <a href="../junior/">
+            
+                    
+                    1.初级
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../junior/chapter-1.html">
+            
+                <a href="../junior/chapter-1.html">
+            
+                    
+                    1.1 第一章
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../middle/">
+            
+                <a href="../middle/">
+            
+                    
+                    2.中级
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../middle/chapter-1.html">
+            
+                <a href="../middle/chapter-1.html">
+            
+                    
+                    2.1 第一章
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../high/">
+            
+                <a href="../high/">
+            
+                    
+                    3.高级
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../high/chapter-1.html">
+            
+                <a href="../high/chapter-1.html">
+            
+                    
+                    3.1 第一章
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >0.7 promise解析</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div class="treeview__container"><div class="treeview__container-title"><span class="treeview__main-title">Treeview</span><span class="treeview__copyright">Copyright &#xA9; aleen42 all right reserved, powered by <a href="https://github.com/aleen42" target="_blank">aleen42</a></span></div><ul>
+<li><div><a href="#promise">Promise</a><i></i></div></li>
+</ul>
+</div>
+
+<h3 id="promise">Promise</h3>
+<p><code>Promise</code>&#x5BF9;&#x8C61;&#x4EE3;&#x8868;&#x4E00;&#x4E2A;&#x5F02;&#x6B65;&#x64CD;&#x4F5C;&#xFF0C;&#x6709;&#x4E09;&#x79CD;&#x72B6;&#x6001;&#xFF1A;<code>pending</code>&#xFF08;&#x8FDB;&#x884C;&#x4E2D;&#xFF09;&#x3001;<code>fulfilled</code>&#xFF08;&#x5DF2;&#x6210;&#x529F;&#xFF09;&#x548C;<code>rejected</code>&#xFF08;&#x5DF2;&#x5931;&#x8D25;&#xFF09;
+&#x4E00;&#x4E2A; <code>Promise</code> &#x5FC5;&#x7136;&#x5904;&#x4E8E;&#x4EE5;&#x4E0B;&#x51E0;&#x79CD;&#x72B6;&#x6001;&#x4E4B;&#x4E00; &#x1F447;&#xFF1A;</p>
+<ul>
+<li>&#x5F85;&#x5B9A; (<code>pending</code>): &#x521D;&#x59CB;&#x72B6;&#x6001;&#xFF0C;&#x65E2;&#x6CA1;&#x6709;&#x88AB;&#x5151;&#x73B0;&#xFF0C;&#x4E5F;&#x6CA1;&#x6709;&#x88AB;&#x62D2;&#x7EDD;&#x3002;</li>
+<li>&#x5DF2;&#x6210;&#x529F; (<code>fulfilled</code>): &#x610F;&#x5473;&#x7740;&#x64CD;&#x4F5C;&#x6210;&#x529F;&#x5B8C;&#x6210;&#x3002;</li>
+<li>&#x5DF2;&#x62D2;&#x7EDD; (<code>rejected</code>): &#x610F;&#x5473;&#x7740;&#x64CD;&#x4F5C;&#x5931;&#x8D25;&#x3002;</li>
+</ul>
+<p>&#x5F53; <code>promise</code> &#x88AB;&#x8C03;&#x7528;&#x540E;&#xFF0C;&#x5B83;&#x4F1A;&#x4EE5;&#x5904;&#x7406;&#x4E2D;&#x72B6;&#x6001; (<code>pending</code>) &#x5F00;&#x59CB;&#x3002; &#x8FD9;&#x610F;&#x5473;&#x7740;&#x8C03;&#x7528;&#x7684;&#x51FD;&#x6570;&#x4F1A;&#x7EE7;&#x7EED;&#x6267;&#x884C;&#xFF0C;&#x800C; <code>promise</code> &#x4ECD;&#x5904;&#x4E8E;&#x5904;&#x7406;&#x4E2D;&#x76F4;&#x5230;&#x89E3;&#x51B3;&#x4E3A;&#x6B62;&#xFF0C;&#x4ECE;&#x800C;&#x4E3A;&#x8C03;&#x7528;&#x7684;&#x51FD;&#x6570;&#x63D0;&#x4F9B;&#x6240;&#x8BF7;&#x6C42;&#x7684;&#x4EFB;&#x4F55;&#x6570;&#x636E;&#x3002;
+&#x88AB;&#x521B;&#x5EFA;&#x7684; <code>promise</code> &#x6700;&#x7EC8;&#x4F1A;&#x4EE5;&#x88AB;&#x89E3;&#x51B3;&#x72B6;&#x6001; (<code>fulfilled</code>) &#x6216; &#x88AB;&#x62D2;&#x7EDD;&#x72B6;&#x6001; (<code>rejected</code>) &#x7ED3;&#x675F;&#xFF0C;&#x5E76;&#x5728;&#x5B8C;&#x6210;&#x65F6;&#x8C03;&#x7528;&#x76F8;&#x5E94;&#x7684;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#xFF08;&#x4F20;&#x7ED9; <code>then</code> &#x548C; <code>catch</code>&#xFF09;&#x3002;</p>
+<p><img src="../assets/promise.jpg" alt=""></p>
+<pre><code class="lang-js"><span class="hljs-comment">// var promise = new Promise((resolve, reject)=&gt;{</span>
+<span class="hljs-comment">//     resolve(&apos;done&apos;);</span>
+<span class="hljs-comment">// });</span>
+<span class="hljs-comment">// promise.then(res=&gt; {</span>
+<span class="hljs-comment">//     console.log(res);</span>
+<span class="hljs-comment">// },reason =&gt; {</span>
+<span class="hljs-comment">//     console.log(reason);</span>
+<span class="hljs-comment">// })</span>
+<span class="hljs-comment">/*
+    promise &#x6709;3&#x79CD;&#x72B6;&#x6001;&#xFF1A;pending&#xFF0C;fulfilled&#xFF0C;rejected&#xFF0C;
+    pending&#x53EF;&#x4EE5;&#x8F6C;&#x6362;&#x6210;fulfilled&#x6216;&#x8005;rejected&#xFF0C;&#x4F46;&#x662F;&#x4E0D;&#x53EF;&#x9006;
+    */</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">myPromise</span> </span>{
+    <span class="hljs-comment">// &#x5148;&#x5B9A;&#x4E49;3&#x4E2A;&#x72B6;&#x6001;&#x5E38;&#x91CF;</span>
+    <span class="hljs-keyword">static</span> PENDING = <span class="hljs-string">&apos;pending&apos;</span>;
+    <span class="hljs-keyword">static</span> FULFILLED = <span class="hljs-string">&apos;fulfilled&apos;</span>;
+    <span class="hljs-keyword">static</span> REJECTED = <span class="hljs-string">&apos;rejected&apos;</span>;
+    <span class="hljs-comment">// &#x6784;&#x9020;&#x51FD;&#x6570;&#xFF0C;&#x4F20;&#x5165;&#x53C2;&#x6570;&#xFF0C;&#x53C2;&#x6570;&#x662F;&#x4E00;&#x4E2A;&#x51FD;&#x6570;</span>
+    <span class="hljs-keyword">constructor</span>(fn) {
+        <span class="hljs-comment">// &#x6700;&#x5F00;&#x59CB;&#x662F;pending&#x7684;&#x72B6;&#x6001;</span>
+        <span class="hljs-keyword">this</span>.promiseState = myPromise.PENDING;
+        <span class="hljs-keyword">this</span>.promiseResult = <span class="hljs-literal">null</span>;
+        <span class="hljs-comment">// &#x5B9A;&#x4E49;2&#x4E2A;&#x88C5;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x7684;&#x6570;&#x7EC4;</span>
+        <span class="hljs-keyword">this</span>.onFulfilledCallbacks = [];
+        <span class="hljs-keyword">this</span>.onRejectedCallbacks = [];
+        <span class="hljs-comment">// &#x6267;&#x884C;fn&#x51FD;&#x6570;&#xFF0C;&#x6CE8;&#x610F;trycatch&#xFF0C;&#x4EE5;&#x4FBF;&#x4E8E;&#x53CA;&#x65F6;&#x629B;&#x51FA;&#x9519;&#x8BEF;</span>
+        <span class="hljs-keyword">try</span> {
+            <span class="hljs-comment">// &#x6CE8;&#x610F;bind&#x4E00;&#x4E0B;this</span>
+            fn(<span class="hljs-keyword">this</span>.resolve.bind(<span class="hljs-keyword">this</span>), <span class="hljs-keyword">this</span>.reject.bind(<span class="hljs-keyword">this</span>));
+        } <span class="hljs-keyword">catch</span> (error) {
+            <span class="hljs-keyword">this</span>.reject(error)
+        }
+    }
+    resolve(result) {
+        <span class="hljs-comment">// pending&#x5230;fulfilled&#x7684;&#x53D8;&#x5316;</span>
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.promiseState === myPromise.PENDING) {
+            <span class="hljs-keyword">this</span>.promiseState = myPromise.FULFILLED;
+            <span class="hljs-keyword">this</span>.promiseResult = result;
+            <span class="hljs-keyword">this</span>.onFulfilledCallbacks.forEach(callback =&gt; {
+                callback(result)
+            })
+        }
+    }
+    reject(reason) {
+        <span class="hljs-comment">// pending&#x5230;rejected&#x7684;&#x53D8;&#x5316;</span>
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.promiseState === myPromise.PENDING) {
+            <span class="hljs-keyword">this</span>.promiseState = myPromise.REJECTED;
+            <span class="hljs-keyword">this</span>.promiseResult = reason;
+            <span class="hljs-keyword">this</span>.onRejectedCallbacks.forEach(callback =&gt; {
+                callback(reason)
+            })
+        }
+    }
+    then(onFulfilled, onRejected) {
+        <span class="hljs-comment">// &#x5224;&#x65AD;then&#x91CC;&#x7684;&#x51FD;&#x6570;&#x662F;&#x4E0D;&#x662F;&#x51FD;&#x6570;&#xFF0C;&#x4EE5;&#x53CA;&#x5904;&#x7406;&#x4E00;&#x4E9B;&#x5F02;&#x5E38;</span>
+        onFulfilled = <span class="hljs-keyword">typeof</span> onFulfilled === <span class="hljs-string">&apos;function&apos;</span> ? onFulfilled : val =&gt; val;
+        onRejected = <span class="hljs-keyword">typeof</span> onRejected === <span class="hljs-string">&apos;function&apos;</span> ? onRejected : reason =&gt; {<span class="hljs-keyword">throw</span> reason};
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.promiseState === myPromise.PENDING) {
+            <span class="hljs-keyword">this</span>.onFulfilledCallbacks.push(onFulfilled);
+            <span class="hljs-keyword">this</span>.onRejectedCallbacks.push(onRejected);
+        }
+        <span class="hljs-comment">// &#x6839;&#x636E;&#x72B6;&#x6001;&#x6765;&#x6267;&#x884C;&#x5BF9;&#x5E94;&#x51FD;&#x6570;</span>
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.promiseState === myPromise.FULFILLED) {
+            onFulfilled(<span class="hljs-keyword">this</span>.promiseResult)
+        }
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.promiseState === myPromise.REJECTED) {
+            onRejected(<span class="hljs-keyword">this</span>.promiseResult)
+        }
+
+    }
+}
+<span class="hljs-built_in">console</span>.log(<span class="hljs-number">1</span>);
+<span class="hljs-keyword">var</span> test = <span class="hljs-keyword">new</span> myPromise((resolve, reject) =&gt; {
+    resolve(<span class="hljs-string">&apos;ok&apos;</span>);
+});
+test.then(res=&gt;{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&apos;res:&apos;</span>, res);
+}, err =&gt; {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&apos;err:&apos;</span>, err);
+});
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="virtualDom和diff算法.html" class="navigation navigation-prev " aria-label="Previous page: 0.6 virtualDom和diff算法">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="algorithm.html" class="navigation navigation-next " aria-label="Next page: 0.8 算法题解析">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"0.7 promise解析","level":"1.2.7","depth":2,"next":{"title":"0.8 算法题解析","level":"1.2.8","depth":2,"path":"summary/algorithm.md","ref":"summary/algorithm.md","articles":[]},"previous":{"title":"0.6 virtualDom和diff算法","level":"1.2.6","depth":2,"path":"summary/virtualDom和diff算法.md","ref":"summary/virtualDom和diff算法.md","articles":[]},"dir":"ltr"},"config":{"plugins":["code","page-treeview","back-to-top-button"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-treeview":{"collapsed":false,"copyright":"Copyright © aleen42","minHeaderCount":"1","minHeaderDeep":"1"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"back-to-top-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"xumeng","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"front-end-examination","links":{"sidebar":{"github":"https://github.com/xumengzi/front-end-examination","xui":"https://docs.xumeng.life/book/"}},"gitbook":"*","description":"考试题库"},"file":{"path":"summary/promise.md","mtime":"2023-03-29T08:31:03.549Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-04-01T11:02:00.612Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

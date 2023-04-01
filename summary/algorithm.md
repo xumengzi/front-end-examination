@@ -551,3 +551,35 @@ function lucky(arr) {
 var arr = [7,7,7,7,7,7,7]
 lucky(arr);
 ```
+
+### 二进制计算
+二进制转换成十进制其实就是：`101 => 1*2**2+1*2**0`
+```js
+/*
+请写一个函数，输入任意十进制的数，返回二进制的数
+比如：输入2，输出10，输入10，输出1010
+*/
+function format(num) {
+    if (num == 1) {
+        return '01';
+    }
+    var result = [];
+    while (num >= 1) {
+        if (num === 1) {
+            result.unshift(1)
+            return result.join('');
+        }
+        if (num % 2 === 1) {
+            num -= 1;
+            num /= 2;
+            result.unshift(1)
+        }
+        if (num % 2 === 0) {
+            num /= 2;
+            result.unshift(0)
+        }
+    }
+}
+var num = 12;
+format(num); // 1100
+```

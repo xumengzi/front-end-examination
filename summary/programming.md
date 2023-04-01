@@ -235,6 +235,45 @@ customizeInstance(str, String); // true
 customizeInstance(num, Number); // true
 ```
 
+### 请实现深拷贝函数
+需要注意的是，有些hack方法是有缺点的，比如扩展运算符，JSON.parse(JSON.stringify)
+```js
+//请实现深拷贝函数
+function deepCopy(obj) {
+    var result = Array.isArray(obj) ? [] : {};
+    for(var i in obj) {
+        if (typeof obj[i] === 'object') {
+            if (!obj[i]) {
+                result[i] = obj[i];
+            }else {
+                result[i] = deepCopy(obj[i]);
+            }
+        } else {
+            result[i] = obj[i];
+        }
+    };
+    return result;
+};
+
+var obj = {
+    a: 1,
+    b: {
+        c: 3
+    },
+    d: function () {
+        console.log('fn');
+    },
+    e: [1,2,[3]],
+    f: null,
+    g: undefined,
+};
+
+var newObj = deepCopy(obj);
+newObj.b.c = 33;
+newObj.e.push(4);
+console.log(obj, newObj)
+```
+
 ### 实现发布（publish）订阅（subscribe）模式函数
 这种模式可以解耦一些代码，让发布者和订阅者互相隔离，让代码更加清晰易懂
 
