@@ -51,7 +51,7 @@ virtual`DOM`简称（`vNode`），就是一颗以`JavaScript`对象（vNode节�
 ![vnode](../assets/vnode.jpeg)
 
 ##### `diff`设计原理
->逐个遍历newV`DOM`的节点，找到它在oldV`DOM`中的位置，如果找到了就移动对应的`DOM`元素，如果没找到说明是新增节点，则新建一个节点插入。遍历完成之后如果oldV`DOM`中还有没处理过的节点，则说明这些节点在newV`DOM`中被删除了，删除它们即可。
+>逐个遍历`newVDOM`的节点，找到它在`oldVDOM`中的位置，如果找到了就移动对应的`DOM`元素，如果没找到说明是新增节点，则新建一个节点插入。遍历完成之后如果`oldVDOM`中还有没处理过的节点，则说明这些节点在`newVDOM`中被删除了，删除它们即可。
 
 仔细思考一下，几乎每一步都要做移动`DOM`的操作，这在`DOM`整体结构变化不大时的开销是很大的，实际上`DOM`变化不大的情况现实中经常发生，很多时候我们只需要变更某个节点的文本而已。
 
@@ -109,72 +109,72 @@ function sameVnode (a, b) {
 ##### `updateChildren`函数
 ```js
 updateChildren (parentElm, oldCh, newCh) {
-    let `oldStart`Idx = 0, `newStart`Idx = 0
+    let oldStartIdx = 0, `newStartIdx = 0
     let oldEndIdx = oldCh.length - 1
-    let `oldStart`Vnode = oldCh[0]
+    let oldStartVnode = oldCh[0]
     let oldEndVnode = oldCh[oldEndIdx]
-    let `newEnd`Idx = newCh.length - 1
-    let `newStart`Vnode = newCh[0]
-    let `newEnd`Vnode = newCh[`newEnd`Idx]
+    let newEndIdx = newCh.length - 1
+    let newStartVnode = newCh[0]
+    let newEndVnode = newCh[`newEnd`Idx]
     let oldKeyToIdx
     let idxInOld
     let elmToMove
     let before
-    while (`oldStart`Idx <= oldEndIdx && `newStart`Idx <= `newEnd`Idx) {
-        if (`oldStart`Vnode == null) {   //对于vnode.key的比较，会把`oldVnode` = null
-            `oldStart`Vnode = oldCh[++`oldStart`Idx] 
+    while (oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx) {
+        if (oldStartVnode == null) {   //对于vnode.key的比较，会把`oldVnode` = null
+            oldStartVnode = oldCh[++oldStartIdx] 
         }else if (oldEndVnode == null) {
             oldEndVnode = oldCh[--oldEndIdx]
-        }else if (`newStart`Vnode == null) {
-            `newStart`Vnode = newCh[++`newStart`Idx]
-        }else if (`newEnd`Vnode == null) {
-            `newEnd`Vnode = newCh[--`newEnd`Idx]
-        }else if (sameVnode(`oldStart`Vnode, `newStart`Vnode)) {
-            patchVnode(`oldStart`Vnode, `newStart`Vnode)
-            `oldStart`Vnode = oldCh[++`oldStart`Idx]
-            `newStart`Vnode = newCh[++`newStart`Idx]
-        }else if (sameVnode(oldEndVnode, `newEnd`Vnode)) {
-            patchVnode(oldEndVnode, `newEnd`Vnode)
+        }else if (newStartVnode == null) {
+            newStartVnode = newCh[++newStartIdx]
+        }else if (newEndVnode == null) {
+            newEndVnode = newCh[--newEndIdx]
+        }else if (sameVnode(oldStartVnode, newStartVnode)) {
+            patchVnode(oldStartVnode, newStartVnode)
+            oldStartVnode = oldCh[++oldStartIdx]
+            newStartVnode = newCh[++newStartIdx]
+        }else if (sameVnode(oldEndVnode, newEndVnode)) {
+            patchVnode(oldEndVnode, newEndVnode)
             oldEndVnode = oldCh[--oldEndIdx]
-            `newEnd`Vnode = newCh[--`newEnd`Idx]
-        }else if (sameVnode(`oldStart`Vnode, `newEnd`Vnode)) {
-            patchVnode(`oldStart`Vnode, `newEnd`Vnode)
-            api.insertBefore(parentElm, `oldStart`Vnode.el, api.nextSibling(oldEndVnode.el))
-            `oldStart`Vnode = oldCh[++`oldStart`Idx]
-            `newEnd`Vnode = newCh[--`newEnd`Idx]
-        }else if (sameVnode(oldEndVnode, `newStart`Vnode)) {
-            patchVnode(oldEndVnode, `newStart`Vnode)
-            api.insertBefore(parentElm, oldEndVnode.el, `oldStart`Vnode.el)
+            newEndVnode = newCh[--newEndIdx]
+        }else if (sameVnode(oldStartVnode, newEndVnode)) {
+            patchVnode(oldStartVnode, newEndVnode)
+            api.insertBefore(parentElm, oldStartVnode.el, api.nextSibling(oldEndVnode.el))
+            oldStartVnode = oldCh[++oldStartIdx]
+            newEndVnode = newCh[--newEndIdx]
+        }else if (sameVnode(oldEndVnode, newStartVnode)) {
+            patchVnode(oldEndVnode, newStartVnode)
+            api.insertBefore(parentElm, oldEndVnode.el, oldStartVnode.el)
             oldEndVnode = oldCh[--oldEndIdx]
-            `newStart`Vnode = newCh[++`newStart`Idx]
+            newStartVnode = newCh[++newStartIdx]
         }else {
             // 使用key时的比较
             if (oldKeyToIdx === undefined) {
-                oldKeyToIdx = createKeyToOldIdx(oldCh, `oldStart`Idx, oldEndIdx) // 有key生成index表
+                oldKeyToIdx = createKeyToOldIdx(oldCh, oldStartIdx, oldEndIdx) // 有key生成index表
             }
-            idxInOld = oldKeyToIdx[`newStart`Vnode.key]
+            idxInOld = oldKeyToIdx[newStartVnode.key]
             if (!idxInOld) {
-                api.insertBefore(parentElm, createEle(`newStart`Vnode).el, `oldStart`Vnode.el)
-                `newStart`Vnode = newCh[++`newStart`Idx]
+                api.insertBefore(parentElm, createEle(newStartVnode).el, oldStartVnode.el)
+                newStartVnode = newCh[++newStartIdx]
             }
             else {
                 elmToMove = oldCh[idxInOld]
-                if (elmToMove.sel !== `newStart`Vnode.sel) {
-                    api.insertBefore(parentElm, createEle(`newStart`Vnode).el, `oldStart`Vnode.el)
+                if (elmToMove.sel !== newStartVnode.sel) {
+                    api.insertBefore(parentElm, createEle(newStartVnode).el, oldStartVnode.el)
                 }else {
-                    patchVnode(elmToMove, `newStart`Vnode)
+                    patchVnode(elmToMove, newStartVnode)
                     oldCh[idxInOld] = null
-                    api.insertBefore(parentElm, elmToMove.el, `oldStart`Vnode.el)
+                    api.insertBefore(parentElm, elmToMove.el, oldStartVnode.el)
                 }
-                `newStart`Vnode = newCh[++`newStart`Idx]
+                newStartVnode = newCh[++newStartIdx]
             }
         }
     }
-    if (`oldStart`Idx > oldEndIdx) {
-        before = newCh[`newEnd`Idx + 1] == null ? null : newCh[`newEnd`Idx + 1].el
-        addVnodes(parentElm, before, newCh, `newStart`Idx, `newEnd`Idx)
-    }else if (`newStart`Idx > `newEnd`Idx) {
-        removeVnodes(parentElm, oldCh, `oldStart`Idx, oldEndIdx)
+    if (oldStartIdx > oldEndIdx) {
+        before = newCh[newEndIdx + 1] == null ? null : newCh[newEndIdx + 1].el
+        addVnodes(parentElm, before, newCh, newStartIdx, newEndIdx)
+    }else if (newStartIdx > newEndIdx) {
+        removeVnodes(parentElm, oldCh, oldStartIdx, oldEndIdx)
     }
 }
 ```
@@ -188,7 +188,7 @@ updateChildren (parentElm, oldCh, newCh) {
 4. 删除的节点：8
 5. 其他节点：3、4、5、6、7
 
-上图例子中设置了``oldStart`+oldEnd`，``newStart`+`newEnd``这样2对指针，分别对应oldV`DOM`和newV`DOM`的起点和终点。`Vue`不断对vnode进行处理同时移动指针直到其中任意一对起点和终点相遇。处理过的节点`Vue`会在oldV`DOM`和newV`DOM`中同时将它标记为已处理（标记方法后文中有介绍）。`Vue`通过以下措施来提升`diff`的性能
+上图例子中设置了`oldStart+oldEnd`，`newStart+newEnd`这样2对指针，分别对应`oldVDOM`和`newVDOM`的起点和终点。`Vue`不断对`vnode`进行处理同时移动指针直到其中任意一对起点和终点相遇。处理过的节点`Vue`会在`oldVDOM`和`newVDOM`中同时将它标记为已处理（标记方法后文中有介绍）。`Vue`通过以下措施来提升`diff`的性能
 
 ##### 1. 优先处理特殊场景
 - 头部的同类型节点、尾部的同类型节点。这类节点更新前后位置没有发生变化，所以不用移动它们对应的`DOM`
@@ -203,7 +203,7 @@ updateChildren (parentElm, oldCh, newCh) {
 
 不设`key`，`newCh`和`oldCh`只会进行头尾两端的相互比较，设`key`后，除了头尾两端的比较外，还会从用`key`生成的对象`oldKeyToIdx`中查找匹配的节点，所以为节点设置`key`可以更高效的利用`DOM`。
 
-#### 按步骤解析updateChildren过程
+#### 按步骤解析`updateChildren`过程
 1. **处理头部的同类型节点，即`oldStart`和`newStart`指向同类节点的情况，如下图中的节点1**
 
 这种情况下，将节点1的变更更新到`DOM`，然后对其进行标记，标记方法是`oldStart`和`newStart`后移1位即可，过程中不需要移动`DOM`（更新`DOM`或许是要的，比如属性变更了，文本内容变更了等等）
@@ -227,15 +227,15 @@ updateChildren (parentElm, oldCh, newCh) {
 
 4. **处理新增的节点**
 
-`newStart`来到了节点11的位置，在oldV`DOM`中找不到节点11，说明它是新增的
-那么就创建一个新的节点，插入`DOM`树，插到什么位置？插到`oldStart`指向的节点（即节点3）前面，然后将`newStart`后移1位标记为已处理（注意oldV`DOM`中没有节点11，所以标记过程中它的指针不需要移动），处理之后如下图
+`newStart`来到了节点11的位置，在`oldVDOM`中找不到节点11，说明它是新增的
+那么就创建一个新的节点，插入`DOM`树，插到什么位置？插到`oldStart`指向的节点（即节点3）前面，然后将`newStart`后移1位标记为已处理（注意`oldVDOM`中没有节点11，所以标记过程中它的指针不需要移动），处理之后如下图
 ![](../assets/vnode/7.png)
 
 5. **处理更新的节点**
 
-经过第（4）步之后，`newStart`来到了节点7的位置，在oldV`DOM`中能找到它而且不在指针位置（查找oldV`DOM`中`oldStart`到oldEnd区间内的节点），说明它的位置移动了
+经过第（4）步之后，`newStart`来到了节点7的位置，在`oldVDOM`中能找到它而且不在指针位置（查找`oldVDOM`中`oldStart`到`oldEnd`区间内的节点），说明它的位置移动了
 
-那么需要在`DOM`树中移动它，移到哪里？移到`oldStart`指向的节点（即节点3）前面，与此同时将节点标记为已处理，跟前面几种情况有点不同，newV`DOM`中该节点在指针处，可以移动`newStart`进行标记，而在oldV`DOM`中该节点不在指针处，所以采用设置为undefined的方式来标记（一定要标记吗？后面会提到）
+那么需要在`DOM`树中移动它，移到哪里？移到`oldStart`指向的节点（即节点3）前面，与此同时将节点标记为已处理，跟前面几种情况有点不同，`newVDOM`中该节点在指针处，可以移动`newStart`进行标记，而在`oldVDOM`中该节点不在指针处，所以采用设置为`undefined`的方式来标记（一定要标记吗？后面会提到）
 ![](../assets/vnode/8.png)
 
 处理之后就成了下面这样
@@ -248,7 +248,7 @@ updateChildren (parentElm, oldCh, newCh) {
 
 7. **处理需删除的节点**
 
-经过前6步处理之后（实际上前6步是循环进行的），朋友们看`newStart`跨过了`newEnd`，它们相遇啦！而这个时候，`oldStart`和oldEnd还没有相遇，说明这2个指针之间的节点（包括它们指向的节点，即上图中的节点7、节点8）是此次更新中被删掉的节点。
+经过前6步处理之后（实际上前6步是循环进行的），朋友们看`newStart`跨过了`newEnd`，它们相遇啦！而这个时候，`oldStart`和`oldEnd`还没有相遇，说明这2个指针之间的节点（包括它们指向的节点，即上图中的节点7、节点8）是此次更新中被删掉的节点。
 
 OK，那我们在`DOM`树中将它们删除，再回到前面我们对节点7做了标记，为什么标记是必需的？标记的目的是告诉`Vue`它已经处理过了，是需要出现在新`DOM`中的节点，不要删除它，所以在这里只需删除节点8。
 

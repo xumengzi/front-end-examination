@@ -10,7 +10,6 @@
   },
   "plugins": [
     "code",
-    "page-treeview",
     "back-to-top-button"
   ]
 }

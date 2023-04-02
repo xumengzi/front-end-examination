@@ -852,3 +852,6 @@ function bfsQueue(node) {
 };
 bfsQueue(tree).join('->'); // 1->2->7->8->3->6->9->12->4->5->10->11
 ```
+
+### 带并发的异步调度器`Scheduler`
+continue

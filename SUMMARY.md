@@ -10,6 +10,7 @@
     * [0.6 virtualDom和diff算法](summary/virtualDom和diff算法.md)
     * [0.7 promise解析](summary/promise.md)
     * [0.8 算法题解析](summary/algorithm.md)
+    * [0.9 技巧掌握](summary/skills.md)
 * [1.初级](junior/README.md)
     * [1.1 第一章](junior/chapter-1.md)
 * [2.中级](middle/README.md)

@@ -26,10 +26,10 @@
 
 #### `vue diff` 算法
 1. 只对比父节点相同的新旧节点（比较的是`vNode`），时间复杂度是`O(n)`
-2. 在diff的过程中，循环从两边向中间靠拢
+2. 在`diff`的过程中，循环从两边向中间靠拢
 
 ##### 新旧节点对比过程
-1. 先找到不需要移动的相同节点，借助key值找到可复用的节点，这是消耗最小的
+1. 先找到不需要移动的相同节点，借助`key`值找到可复用的节点，这是消耗最小的
 2. 再找相同但是需要移动的节点，消耗第二小
 3. 最后找不到，才会去新建删除节点，保底处理
 
@@ -49,7 +49,7 @@
 见官网
 
 #### `vue`的循环中，key的作用是什么
-`key`是给每一个`vNode`的唯一Id，依靠`key`，我们的`diff`操作能够更准确，更迅速。
+`key`是给每一个`vNode`的唯一`Id`，依靠`key`，我们的`diff`操作能够更准确，更迅速。
 
 更准确：因为带`key`就不是就地复用了，再`sameNode`函数a.key === b.key对比中可以避免就地复用的情况。所以会更加准确，如果不加key，乎导致之前的节点保留下来，会产生一系列`bug`
 更迅速：`key`的唯一性可以被`map`数据结构充分利用，相比于遍历查找的时间复杂度`O(n)`，`map`的时间复杂度仅仅为`O(1)`。源码如下：
@@ -67,13 +67,13 @@ function createKeyToOldIdx(children, beginIdx, endIdx) {
 
 #### `vue-router`路由模式
 默认值是：`hash`（浏览器环境）| `abstract（node）`
-可选值：`hash` | history | `abstract`
+可选值：`hash` | `history` | `abstract`
 配置路由模式：
 1. `hash`使用URL `hash`来作为路由。支持所有浏览器，包括不支持`HTML5 History Api`的浏览器
 2. `history`依赖`HTML5 History Api`和服务器配置
 3. `abstract`支持所有`JavaScript`运行环境，如`nodejs`服务端。如果发现没有浏览器`Api`，路由会强制进入这个模式
 
-#### `vue` 响应式defineReactive的原理
+#### `vue` 响应式`defineReactive`的原理
 ```js
 // 简化后的版本
 function defineReactive(target, key, value, enumerable) {
@@ -124,7 +124,7 @@ function reactify(o, vm) {
 }
 ```
 
-#### `vue`中访问data属性为啥不需要带data
+#### `vue`中访问`data`属性为啥不需要带`data`
 ```js
 /** 将某一个对象的属性访问映射到对象的某一个属性成员上 */
 function proxy(target, prop, key) {
@@ -141,8 +141,8 @@ function proxy(target, prop, key) {
 }
 ```
 
-#### 为什么this.$nextTick里能获取到更新后的dom
-调用this.$nextTick方法其实就是调用vue里的nextTick函数，再异步队列里执行回调函数。根据先进先出的原则，修改data触发的更新异步队列会先执行，执行完后dom会更新渲染。接下来再执行this.$nextTick里的回调函数，所以就能获取更新后的dom元素了。
+#### 为什么`this.$nextTick`里能获取到更新后的`dom`
+调用`this.$nextTick`方法其实就是调用`vue`里的`nextTick`函数，再异步队列里执行回调函数。根据先进先出的原则，修改`data`触发的更新异步队列会先执行，执行完后`dom`会更新渲染。接下来再执行`this.$nextTick`里的回调函数，所以就能获取更新后的`dom`元素了。
 ```js
 // 我们使用 this.$nextTick 其实就是调用 nextTick 方法
 Vue.prototype.$nextTick = function (fn: Function) {
@@ -154,3 +154,6 @@ Vue.prototype.$nextTick = function (fn: Function) {
 2. 首先，会将所有的`watcher`加入到队列`Queue`
 3. 然后，调用`nextTick`方法，执行异步任务
 4. 再异步任务的回调中，对`Queue`中的`watcher`进行排序，然后执行`DOM`更新
+
+#### 为何`data`是一个函数而不是一个对象
+因为`JavaScript`里对象是引用类型的数据，当多个实例引用同一个对象的时候，只要一个实例对数据进行了操作，那么其他实例中的数据也会发生变化。而在`vue`中，这显然是不可行的，我们需要组件有自己单独的数据。所以数据必须是一个函数，而数据以函数返回值的形式定义，这样我们组件就有了自己的数据源，而不是共用的了。

@@ -4,4 +4,4 @@ rm -rf book && rm -rf _book
 echo '删除完毕'
 
 echo '准备开启本地服务http://localhost:4000/'
-gitbook serve
+nvm use v10.24.0 && gitbook serve
