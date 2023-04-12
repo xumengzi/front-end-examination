@@ -34,7 +34,7 @@
 3. 最后找不到，才会去新建删除节点，保底处理
 
 注意：新旧节点对比过程，不会对这两棵`Vnode`树进行修改，而是以比较的结果直接对 真实`DOM` 进行修改
-`Vue`的`patch`是即时的，并不是打包所有修改最后一起操作`DOM`（React则是将更新放入队列后集中处理）
+`Vue`的`patch`是即时的，并不是打包所有修改最后一起操作`DOM`（`React`则是将更新放入队列后集中处理）
 具体简介：[0.5 virtualDom和diff算法](/summary/virtualDom和diff算法.md)
 
 #### `vue`渲染过程
@@ -157,3 +157,107 @@ Vue.prototype.$nextTick = function (fn: Function) {
 
 #### 为何`data`是一个函数而不是一个对象
 因为`JavaScript`里对象是引用类型的数据，当多个实例引用同一个对象的时候，只要一个实例对数据进行了操作，那么其他实例中的数据也会发生变化。而在`vue`中，这显然是不可行的，我们需要组件有自己单独的数据。所以数据必须是一个函数，而数据以函数返回值的形式定义，这样我们组件就有了自己的数据源，而不是共用的了。
+
+### `vue2`中数组没有及时更新的解决办法
+1. 可以用`this.$set`去设置
+2. 使用`push`,`pop`,`shift`等数组方法去更新数组
+3. 使用官方的`this.$forceUpdate()`去更新
+4. 可以用`hack`的写法，比如`[...Array]`，`JSON.parse(JSON.stringify)`
+
+### 请写一个`mini`版本的`vue router`
+
+```js
+const Vue; // 先定义一个Vue
+class MyVueRouter {
+  constructor(options) {
+    this.$options = options;
+    this.routeMap = {}; // 存储路由信息
+    // 路由响应式绑定
+    this.app = new Vue({
+      data: {
+        current: '/'
+      }
+    })
+  }
+  init() {
+    this.bindEvents(); // 监听url变化，绑定事件
+    this.createRouteMap(this.$options); // 解析路由配置
+    this.initComponent(); // 实现router-view
+  }
+  bindEvents() {
+    // 监听刚打开页面的时候
+    window.addEventListener('load', this.onHashChange.bind(this));
+    // 监听URL变化
+    window.addEventListener('hashchange', this.onHashChange.bind(this));
+  }
+  onHashChange() {
+    /*
+    比如这个网站：https://xumeng.life/#test
+    window.location.hash返回的是#test
+    slice接受2个参数start和end，传1表示把test获取到
+    */
+    this.app.current = window.location.hash.slice(1) || '/';
+  }
+  createRouteMap(options) {
+    options.routes.forEach(item => {
+      this.routeMap[item.path] = item.component;
+    })
+  }
+  initComponent() {
+    Vue.component('router-link', {
+      props: {
+        to: String
+      },
+      render(h) {
+        /*
+          h函数全称hyperscript，意思是能够创建html的js，许多虚拟dom都会用这个来实现，约定俗成的
+          比如你可以这样使用：
+          h('div')
+          h('div', { id: 'foo' })
+
+          // attribute 和 property 都能在 prop 中书写
+          // Vue 会自动将它们分配到正确的位置
+          h('div', { class: 'bar', innerHTML: 'hello' })
+
+          // 像 `.prop` 和 `.attr` 这样的的属性修饰符
+          // 可以分别通过 `.` 和 `^` 前缀来添加
+          h('div', { '.name': 'some-name', '^width': '100' })
+
+          // 类与样式可以像在模板中一样
+          // 用数组或对象的形式书写
+          h('div', { class: [foo, { bar }], style: { color: 'red' } })
+
+          // 事件监听器应以 onXxx 的形式书写
+          h('div', { onClick: () => {} })
+        */
+        return h('a', {
+          attrs: {
+            href: '#' + this.to
+          }}, 
+          [this.$slots.default])
+      }
+    });
+    Vue.component('router-view', {
+      render: h => {
+        const com = this.routeMap[this.app.current];
+        return h(com);
+      }
+    })
+  }
+};
+
+const router = new MyVueRouter({
+  routes: [
+    {
+      path: '/',
+      name: 'index',
+      component: a
+    },
+    {
+      path: '/',
+      name: 'about',
+      component: b
+    }
+  ]
+});
+```

@@ -55,7 +55,7 @@ virtual`DOM`简称（`vNode`），就是一颗以`JavaScript`对象（vNode节�
 
 仔细思考一下，几乎每一步都要做移动`DOM`的操作，这在`DOM`整体结构变化不大时的开销是很大的，实际上`DOM`变化不大的情况现实中经常发生，很多时候我们只需要变更某个节点的文本而已。
 
-### vue的`diff`算法实现
+### `vue`的`diff`算法实现
 先来看看`patch`是怎么打补丁的（核心代码）
 ```js
 function patch (oldVnode, vnode) {
@@ -101,9 +101,9 @@ function sameVnode (a, b) {
 ##### `patch`Vnode函数作用
 1. 找到真实的`DOM`，称为`el`
 2. 判断`Vnode`和`oldVnode`是否指向同一对象，如果是，那么直接`return`
-3. 如果他们都有文本节点，且不相等，那么将el的文本节点设置为`Vnode`的文本节点
+3. 如果他们都有文本节点，且不相等，那么将`el`的文本节点设置为`Vnode`的文本节点
 4. 如果`oldVnode`里有子节点，但是`Vnode`里没有，那么删除`el`的子节点
-5. 如果`oldVnode`里没有子节点，但是`Vnode`里有，则将`Vnode`的子节点真实化后添加到el
+5. 如果`oldVnode`里没有子节点，但是`Vnode`里有，则将`Vnode`的子节点真实化后添加到`el`
 6. 如果两者都有子节点，则执行`updateChildren`函数比较子节点。这个函数非常重要
 
 ##### `updateChildren`函数
@@ -211,12 +211,12 @@ updateChildren (parentElm, oldCh, newCh) {
 
 2. **处理尾部的同类型节点，即oldEnd和`newEnd`指向同类节点的情况，如下图中的节点10**
 
-与情况（1）类似，这种情况下，将节点10的变更更新到`DOM`，然后oldEnd和`newEnd`前移1位进行标记，同样也不需要移动`DOM`
+与情况（1）类似，这种情况下，将节点10的变更更新到`DOM`，然后`oldEnd`和`newEnd`前移1位进行标记，同样也不需要移动`DOM`
 ![](../assets/vnode/3.png)
 
 3. **处理头尾/尾头的同类型节点，即`oldStart`和`newEnd`，以及oldEnd和`newStart`指向同类节点的情况，如下图中的节点2和节点9**
 
-先看节点2，其实是往后移了，移到哪里？移到oldEnd指向的节点（即节点9）后面，移动之后标记该节点，将`oldStart`后移1位，`newEnd`前移一位
+先看节点2，其实是往后移了，移到哪里？移到`oldEnd`指向的节点（即节点9）后面，移动之后标记该节点，将`oldStart`后移1位，`newEnd`前移一位
 ![](../assets/vnode/4.png)
 
 操作结束之后情况如下图

@@ -227,7 +227,7 @@ class FileListPlugin {
 module.exports = FileListPlugin;
 ```
 
-在webpack.config.js引入之后，进行编译，会发现生成了一个assets.md文件，里面的内容是：
+在`webpack.config.js`引入之后，进行编译，会发现生成了一个`assets.md`文件，里面的内容是：
 
 ```md
 ## here is FileListPlugin.md

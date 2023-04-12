@@ -399,11 +399,11 @@ document.addEventListener('mousemove', throttle(function(e){
 }, 500), false);
 ```
 
-### 实现webpack里的plugin
-一句话概括Plugin：可以在webpack构建的各个生命周期对文件进行更改。
-plugin的实现需要注意以下几个点：
-1. 必须是一个JS的类或者命名函数
-2. 在函数原型上有一个apply函数
+### 实现`webpack`里的`plugin`
+一句话概括`Plugin`：可以在`webpack`构建的各个生命周期对文件进行更改。
+`plugin`的实现需要注意以下几个点：
+1. 必须是一个`JS`的类或者命名函数
+2. 在函数原型上有一个`apply`函数
 3. 在不同生命周期调用不同的函数进行操作，必要时调用`webpack`的回调
 
 这里有一个非常简单的例子，具体的例子见：
@@ -506,6 +506,7 @@ Promise.all([promise1, promise2, promise3])
 核心思想：
 1. 因为结构是树形，那么必须用到递归
 2. 数组循环的时候，第一层需要用最外层的div来包裹，而二层，三层往后则需要递归放到一层生成的dom里
+
 ```js
 var obj = [
     {

@@ -4,12 +4,12 @@ echo '删除无关文件_book/book'
 rm -fr _book && rm -fr book
 
 echo 'build'
-gitbook build
+nvm use v10.24.0 && gitbook build
 
 echo '改名'
 mv _book book
 
 echo '提交github'
-git add . && git commit -m '提交' && git push
+git add . && git commit -m 'add: mini vue-router' && git push
 
 echo '成功'

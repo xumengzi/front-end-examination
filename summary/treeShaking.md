@@ -116,7 +116,7 @@ export default 'foo-bar'
 #### 2.3 生成代码
 经过前面的收集与标记步骤后，`Webpack` 已经在 `ModuleGraph` 体系中清楚地记录了每个模块都导出了哪些值，每个导出值又没那块模块所使用。接下来，`Webpack` 会根据导出值的使用情况生成不同的代码，例如：
 ![](../assets/webpack/2.jpeg)
-重点关注 `bar.js` 文件，同样是导出值，bar 被 `index.js` 模块使用因此对应生成了 __webpack_require__.d 调用 `"bar": ()=>(/* binding */ bar)`，作为对比 `foo` 则仅仅保留了定义语句，没有在 `chunk` 中生成对应的 `export`。
+重点关注 `bar.js` 文件，同样是导出值，`bar` 被 `index.js` 模块使用因此对应生成了 __webpack_require__.d 调用 `"bar": ()=>(/* binding */ bar)`，作为对比 `foo` 则仅仅保留了定义语句，没有在 `chunk` 中生成对应的 `export`。
 
 这一段生成逻辑均由导出语句对应的 `HarmonyExportXXXDependency` 类实现，大体的流程：
 
@@ -130,7 +130,7 @@ export default 'foo-bar'
 经过前面几步操作之后，模块导出列表中未被使用的值都不会定义在 __webpack_exports__ 对象中，形成一段不可能被执行的 `Dead Code` 效果，如上例中的 `foo` 变量：
 ![](../assets/webpack/3.jpeg)
 
-在此之后，将由 `Terser`、Uglify`JS` 等 DCE 工具“摇”掉这部分无效代码，构成完整的 `Tree Shaking` 操作。
+在此之后，将由 `Terser`、Uglify`JS` 等 `DCE` 工具“摇”掉这部分无效代码，构成完整的 `Tree Shaking` 操作。
 
 #### 2.5 总结
 - 综上所述，`Webpack` 中 `Tree Shaking` 的实现分为如下步骤：
@@ -155,7 +155,7 @@ export default 'foo-bar'
 
 没有进一步，从语义上分析模块导出值是不是真的被有效使用。
 
-更深层次的原因则是 ``JavaScript`` 的赋值语句并不「纯」，视具体场景有可能产生意料之外的副作用，例如：
+更深层次的原因则是 `JavaScript` 的赋值语句并不「纯」，视具体场景有可能产生意料之外的副作用，例如：
 ```js
 import { bar, foo } from "./bar";
 let count = 0;
@@ -211,7 +211,7 @@ export {
 ```
 
 #### 3.5 使用支持 `Tree Shaking` 的包
-如果可以的话，应尽量使用支持 `Tree Shaking` 的 npm 包，例如：
+如果可以的话，应尽量使用支持 `Tree Shaking` 的 `npm` 包，例如：
 - 使用 `lodash-es` 替代 `lodash` ，或者使用 `babel-plugin-lodash` 实现类似效果
 
 不过，并不是所有 `npm` 包都存在 `Tree Shaking` 的空间，诸如 `React`、`Vue2` 一类的框架原本已经对生产版本做了足够极致的优化，此时业务代码需要整个代码包提供的完整功能，基本上不太需要进行 `Tree Shaking`。
