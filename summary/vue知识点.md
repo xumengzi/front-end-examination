@@ -6,7 +6,7 @@
 3. 高阶函数：一个函数的参数是一个函数，该函数对参数进行加工从而得到了一个新函数，这个加工过后的函数就是高阶函数
 
 #### `vue`响应式系统
-`vue`初始化的时候，会用`Object.defineProperty`函数给data中每一个属性添加`getter，setter`，同时创建`dep`和`watcher`进行
+`vue`初始化的时候，会用`Object.defineProperty`函数给`data`中每一个属性添加`getter，setter`，同时创建`dep`和`watcher`进行
 依赖收集和派发更新，最后通过`diff`算法对比新老`vnode`差异，通过`patch`及时更新`DOM`
 
 #### `vue`的数据频繁变化，为何只会更新一次
@@ -20,7 +20,7 @@
 `vue`2里就重写了7个能够改变原数组的方式来实现监听
 而普通对象还是使用`Object.defineProperty`添加`set/get`来监听
 
-#### `vue`.nextTick的原理
+#### `vue.nextTick`的原理
 在下次`DOM`更新循环结束之后执行延迟回调。再修改数据之后立即使用这个方法，获取更新后的`DOM`
 源码实现是通过微/宏任务来实现的。`Promise > Mutation Observer > setImmediate > setTimeout`
 
@@ -48,7 +48,7 @@
 #### `vue`生命周期
 见官网
 
-#### `vue`的循环中，key的作用是什么
+#### `vue`的循环中，`key`的作用是什么
 `key`是给每一个`vNode`的唯一`Id`，依靠`key`，我们的`diff`操作能够更准确，更迅速。
 
 更准确：因为带`key`就不是就地复用了，再`sameNode`函数a.key === b.key对比中可以避免就地复用的情况。所以会更加准确，如果不加key，乎导致之前的节点保留下来，会产生一系列`bug`

@@ -106,7 +106,6 @@ var questionObj = {
 			answer: "123,456",
 			point: 8,
 			isExecuted: true,
-			content: `var money = 123456 // => 123,456`
 		},
 		{
 			isMul: "multiple",
@@ -116,7 +115,6 @@ var questionObj = {
 			answer: "0.3",
 			point: 8,
 			isExecuted: true,
-			content: `var money = 123456 // => 123,456`
 		},
 		{
 			isMul: "multiple",

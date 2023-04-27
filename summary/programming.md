@@ -13,7 +13,7 @@ function fn(x, y) {
 }
 fn.call() // 0-undefined-undefined
 fn.call(obj, 3, 4); // 1-3-4
-fn.call(null, 3, 4); // 1-3-4
+fn.call(null, 3, 4); // 0-3-4
 ```
 
 ##### 模拟`call`函数如下，需要注意的点

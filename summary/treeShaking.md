@@ -130,7 +130,7 @@ export default 'foo-bar'
 经过前面几步操作之后，模块导出列表中未被使用的值都不会定义在 __webpack_exports__ 对象中，形成一段不可能被执行的 `Dead Code` 效果，如上例中的 `foo` 变量：
 ![](../assets/webpack/3.jpeg)
 
-在此之后，将由 `Terser`、Uglify`JS` 等 `DCE` 工具“摇”掉这部分无效代码，构成完整的 `Tree Shaking` 操作。
+在此之后，将由 `Terser`、`UglifyJS` 等 `DCE` 工具“摇”掉这部分无效代码，构成完整的 `Tree Shaking` 操作。
 
 #### 2.5 总结
 - 综上所述，`Webpack` 中 `Tree Shaking` 的实现分为如下步骤：

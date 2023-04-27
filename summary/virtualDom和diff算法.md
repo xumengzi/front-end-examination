@@ -1,5 +1,5 @@
 ### virtual`DOM`
-virtual`DOM`简称（`vNode`），就是一颗以`JavaScript`对象（vNode节点）作为基础的树，用对象属性来描述节点，实际上它
+virtual`DOM`简称（`vNode`），就是一颗以`JavaScript`对象（`vNode`节点）作为基础的树，用对象属性来描述节点，实际上它
 只是一层真实`DOM`的抽象。最终可以通过一系列操作使这棵树映射到真实的`DOM`上。
 
 ##### 举个例子
@@ -32,7 +32,7 @@ virtual`DOM`简称（`vNode`），就是一颗以`JavaScript`对象（vNode节�
 由于虚拟`DOM`是以`JavaScript`对象为基础而不依赖浏览器的运行环境，所以这使得它具有跨平台的能力，可以运行在浏览器，`node`等环境
 
 2. 原生`DOM`操作慢，而js运行效率高
-我们可以将`DOM`放在js层，提高效率
+我们可以将`DOM`放在`js`层，提高效率
 因为`DOM`操作的执行速度远不如`JavaScript`的运算速度快，因此，把大量的`DOM`操作搬到`JavaScript`中，运用`patch`算法来计算真正需要更新的节点，最大限度的减少`DOM`操作，从而显著提高性能。
 虚拟`DOM`本质上就是在js和`DOM`中做一个缓存。可以类比`CPU`和硬盘，既然硬盘读取速度慢，我们就在它们之间做一个缓存，同理`DOM`操作慢，我们就在它们`js`和`DOM`之间加一个缓存。`CPU（js）`只操作内存（虚拟`DOM`），最后更新的时候就写入硬盘。
 
@@ -98,7 +98,7 @@ function sameVnode (a, b) {
 
 当我们确定两个节点值得比较之后我们会对两个节点指定`patchVnode`方法。那么这个方法做了什么呢？
 
-##### `patch`Vnode函数作用
+##### `patchVnode`函数作用
 1. 找到真实的`DOM`，称为`el`
 2. 判断`Vnode`和`oldVnode`是否指向同一对象，如果是，那么直接`return`
 3. 如果他们都有文本节点，且不相等，那么将`el`的文本节点设置为`Vnode`的文本节点
@@ -209,7 +209,7 @@ updateChildren (parentElm, oldCh, newCh) {
 这种情况下，将节点1的变更更新到`DOM`，然后对其进行标记，标记方法是`oldStart`和`newStart`后移1位即可，过程中不需要移动`DOM`（更新`DOM`或许是要的，比如属性变更了，文本内容变更了等等）
 ![](../assets/vnode/2.png)
 
-2. **处理尾部的同类型节点，即oldEnd和`newEnd`指向同类节点的情况，如下图中的节点10**
+2. **处理尾部的同类型节点，即`oldEnd`和`newEnd`指向同类节点的情况，如下图中的节点10**
 
 与情况（1）类似，这种情况下，将节点10的变更更新到`DOM`，然后`oldEnd`和`newEnd`前移1位进行标记，同样也不需要移动`DOM`
 ![](../assets/vnode/3.png)
