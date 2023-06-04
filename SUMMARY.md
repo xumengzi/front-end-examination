@@ -4,7 +4,7 @@
 * [0.浏览器](browser/README.md)
     * [0.1 Browser-environment](browser/document/browser-environment.md)
     * [0.2 DOM-tree](browser/document/DOM-tree.md)
-* [1.测试](summary/README.md)
+* [1.复习](summary/README.md)
     * [1.1 核心编程题](summary/programming.md)
     * [1.2 webpack-Plugin解析](summary/webpackPlugin.md)
     * [1.3 webpack-loader解析](summary/loader.md)

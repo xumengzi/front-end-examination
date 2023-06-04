@@ -10,6 +10,6 @@ echo '改名'
 mv _book book
 
 echo '提交github'
-git add . && git commit -m 'add: mini vue-router' && git push
+git add . && git commit -m 'add: 修改细节' && git push
 
 echo '成功'

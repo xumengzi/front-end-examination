@@ -3,12 +3,14 @@
 
 ## 项目名称: `front-end-examination`
 
-* 简介: 前端考试题集, 分为: 初, 中, 高级. 分别有选择题,填空题,编程题等, 部分试卷支持打分.
+* 简介: 前端复习和考试题集, 分为: 复习以及初, 中, 高级. 分别有选择题,填空题,编程题等, 部分试卷支持打分.
 
-##### 本项目包含四个模块:
-* [1.初级](junior/README.md)
-* [2.中级](middle/README.md)
-* [3.高级](high/README.md)
+##### 本项目包含五个模块:
+* [0.浏览器](browser/README.md)
+* [1.复习](summary/README.md)
+* [2.初级](junior/README.md)
+* [3.中级](middle/README.md)
+* [4.高级](high/README.md)
 
 ***
 
