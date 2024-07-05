@@ -1,10 +1,13 @@
 ### 一、什么是 `Tree Shaking`
+
 `Tree-Shaking` 是一种基于 `ES Module` 规范的 `Dead Code Elimination` 技术，它会在运行过程中静态分析模块之间的导入导出，确定 `ESM` 模块中哪些导出值未曾其它模块使用，并将其删除，以此实现打包产物的优化。
 
 `Tree Shaking` 较早前由 `Rich Harris` 在 `Rollup` 中率先实现，`Webpack` 自 2.0 版本开始接入，至今已经成为一种应用广泛的性能优化手段。
 
 #### 1.1 在 `Webpack` 中启动 `Tree Shaking`
+
 在 `Webpack` 中，启动 `Tree Shaking` 功能必须同时满足三个条件：
+
 1. 使用 `ESM` 规范编写模块代码
 2. 配置 `optimization.usedExports` 为 true，启动标记功能
 3. 启动代码优化功能，可以通过如下方式实现：
@@ -13,60 +16,67 @@
    3. 提供 `optimization.minimizer` 数组
 
 这里有一个配置的例子
+
 ```js
 // webpack.config.js
 module.exports = {
-    entry: './src/index',
-    mode: 'production',
-    devtool: false,
-    optimization: {
-        usedExports: true,
-    }
-}
+  entry: "./src/index",
+  mode: "production",
+  devtool: false,
+  optimization: {
+    usedExports: true,
+  },
+};
 ```
 
 #### 1.2 理论基础
-在 `CommonJs`、`AMD`、`CMD` 等旧版本的 ``JavaScript`` 模块化方案中，导入导出行为是高度动态，难以预测的，例如：
+
+在 `CommonJs`、`AMD`、`CMD` 等旧版本的 `JavaScript` 模块化方案中，导入导出行为是高度动态，难以预测的，例如：
+
 ```js
-if(process.env.NODE_ENV === 'development'){
-    require('./bar');
-    exports.foo = 'foo';
+if (process.env.NODE_ENV === "development") {
+  require("./bar");
+  exports.foo = "foo";
 }
 ```
 
 而 `ESM` 方案则从规范层面规避这一行为，它要求所有的导入导出语句只能出现在模块顶层，且导入导出的模块名必须为字符串常量，这意味着下述代码在 `ESM` 方案下是非法的：
+
 ```js
 // 这段代码将会报错
-if(process.env.NODE_ENV === 'development'){
-    import bar from 'bar';
-    export const foo = 'foo';
+if (process.env.NODE_ENV === "development") {
+  import bar from "bar";
+  export const foo = "foo";
 }
 ```
 
 所以，`ESM` 下模块之间的依赖关系是高度确定的，与运行状态无关，编译工具只需要对 `ESM` 模块做静态分析，就可以从代码字面量中推断出哪些模块值未曾被其它模块使用，这是实现 `Tree Shaking` 技术的必要条件。
 
 #### 1.3 示例
+
 对于下面代码：
+
 ```js
 // `index.js`
-import {bar} from './bar';
+import { bar } from "./bar";
 console.log(bar);
 
 // `bar.js`
-export const bar = 'bar';
-export const foo = 'foo';
+export const bar = "bar";
+export const foo = "foo";
 ```
 
-示例中，``bar.js``导出了2个变量`bar`和`foo`，但是只有`bar`被其他模块使用，经过`Tree Shaking`处理过后，`foo`变量会被视作无用代码而被删除。
+示例中，`bar.js`导出了 2 个变量`bar`和`foo`，但是只有`bar`被其他模块使用，经过`Tree Shaking`处理过后，`foo`变量会被视作无用代码而被删除。
 
 ### 二、实现原理
+
 `Webpack` 中，`Tree-shaking` 的实现一是先「标记」出模块导出值中哪些没有被用过，二是使用 `Terser` 删掉这些没被用到的导出语句。标记过程大致可划分为三个步骤：
 
 - `Make` 阶段，收集模块导出变量并记录到模块依赖关系图 `ModuleGraph` 变量中
 - `Seal` 阶段，遍历 `ModuleGraph` 标记模块导出变量有没有被使用
 - 生成产物时，若变量没有被其它模块使用则删除对应的导出语句
 
->标记功能需要配置 `optimization.usedExports = true` 开启
+> 标记功能需要配置 `optimization.usedExports = true` 开启
 
 也就是说，标记的效果就是删除没有被其它模块使用的导出语句，比如：
 ![](../assets/webpack/1.jpeg)
@@ -78,18 +88,21 @@ export const foo = 'foo';
 接下来我会展开标记过程的源码，详细讲解 `Webpack` 5 中 `Tree Shaking` 的实现过程，对源码不感兴趣的同学可以直接跳到下一章。
 
 #### 2.1 收集模块导出
+
 首先，`Webpack` 需要弄清楚每个模块分别有什么导出值，这一过程发生在 `make` 阶段，大体流程：
 
 将模块的所有 `ESM` 导出语句转换为 `Dependency` 对象，并记录到 `module` 对象的 `dependencies` 集合，转换规则：
+
 - 具名导出转换为 `HarmonyExportSpecifierDependency` 对象
-- default 导出转换为 `HarmonyExportExpressionDependency` 对象
+- `default` 导出转换为 `HarmonyExportDefaultSpecifierDependency` 对象
 
 例如对于下面的模块：
-```js
-export const bar = 'bar';
-export const foo = 'foo';
 
-export default 'foo-bar'
+```js
+export const bar = "bar";
+export const foo = "foo";
+
+export default "foo-bar";
 ```
 
 对应的`dependencies` 值为：
@@ -102,7 +115,9 @@ export default 'foo-bar'
 经过 `FlagDependencyExportsPlugin` 插件处理后，所有 `ESM` 风格的 `export` 语句都会记录在 `ModuleGraph` 体系内，后续操作就可以从 `ModuleGraph` 中直接读取出模块的导出值。
 
 #### 2.2 标记模块导出
+
 模块导出信息收集完毕后，`Webpack` 需要标记出各个模块的导出列表中，哪些导出值有被其它模块用到，哪些没有，这一过程发生在 `Seal` 阶段，主流程：
+
 1. 触发 `compilation.hooks.optimizeDependencies` 钩子，开始执行 `FlagDependencyUsagePlugin` 插件逻辑
 2. 在 `FlagDependencyUsagePlugin` 插件中，从 entry 开始逐步遍历 `ModuleGraph` 存储的所有 `module` 对象
 3. 遍历 `module` 对象对应的 `exportInfo` 数组
@@ -114,9 +129,10 @@ export default 'foo-bar'
 上面是极度简化过的版本，中间还存在非常多的分支逻辑与复杂的集合操作，我们抓住重点：标记模块导出这一操作集中在 `FlagDependencyUsagePlugin` 插件中，执行结果最终会记录在模块导出语句对应的 `exportInfo._usedInRuntime` 字典中。
 
 #### 2.3 生成代码
+
 经过前面的收集与标记步骤后，`Webpack` 已经在 `ModuleGraph` 体系中清楚地记录了每个模块都导出了哪些值，每个导出值又没那块模块所使用。接下来，`Webpack` 会根据导出值的使用情况生成不同的代码，例如：
 ![](../assets/webpack/2.jpeg)
-重点关注 `bar.js` 文件，同样是导出值，`bar` 被 `index.js` 模块使用因此对应生成了 __webpack_require__.d 调用 `"bar": ()=>(/* binding */ bar)`，作为对比 `foo` 则仅仅保留了定义语句，没有在 `chunk` 中生成对应的 `export`。
+重点关注 `bar.js` 文件，同样是导出值，`bar` 被 `index.js` 模块使用因此对应生成了 **webpack_require**.d 调用 `"bar": ()=>(/* binding */ bar)`，作为对比 `foo` 则仅仅保留了定义语句，没有在 `chunk` 中生成对应的 `export`。
 
 这一段生成逻辑均由导出语句对应的 `HarmonyExportXXXDependency` 类实现，大体的流程：
 
@@ -124,25 +140,29 @@ export default 'foo-bar'
 2. 在 `apply` 方法内，读取 `ModuleGraph` 中存储的 `exportsInfo` 信息，判断哪些导出值被使用，哪些未被使用
 3. 对已经被使用及未被使用的导出值，分别创建对应的 `HarmonyExportInitFragment` 对象，保存到 `initFragments` 数组
 4. 遍历 `initFragments` 数组，生成最终结果
-基本上，这一步的逻辑就是用前面收集好的 `exportsInfo` 对象未模块的导出值分别生成导出语句。
+   基本上，这一步的逻辑就是用前面收集好的 `exportsInfo` 对象未模块的导出值分别生成导出语句。
 
 #### 2.4 删除 `Dead Code`
-经过前面几步操作之后，模块导出列表中未被使用的值都不会定义在 __webpack_exports__ 对象中，形成一段不可能被执行的 `Dead Code` 效果，如上例中的 `foo` 变量：
+
+经过前面几步操作之后，模块导出列表中未被使用的值都不会定义在 **webpack_exports** 对象中，形成一段不可能被执行的 `Dead Code` 效果，如上例中的 `foo` 变量：
 ![](../assets/webpack/3.jpeg)
 
 在此之后，将由 `Terser`、`UglifyJS` 等 `DCE` 工具“摇”掉这部分无效代码，构成完整的 `Tree Shaking` 操作。
 
 #### 2.5 总结
+
 - 综上所述，`Webpack` 中 `Tree Shaking` 的实现分为如下步骤：
 - 在 `FlagDependencyExportsPlugin` 插件中根据模块的 `dependencies` 列表收集模块导出值，并记录到 `ModuleGraph` 体系的 `exportsInfo` 中
-- 在 ``FlagDependencyUsagePlugin`` 插件中收集模块的导出值的使用情况，并记录到 `exportInfo._usedInRuntime` 集合中
+- 在 `FlagDependencyUsagePlugin` 插件中收集模块的导出值的使用情况，并记录到 `exportInfo._usedInRuntime` 集合中
 - 在 `HarmonyExportXXXDependency.Template.apply` 方法中根据导出值的使用情况生成不同的导出语句
 - 使用 `DCE` 工具删除 `Dead Code`，实现完整的树摇效果
 
 ### 三、最佳实践
+
 虽然 `Webpack` 自 2.x 开始就原生支持 `Tree Shaking` 功能，但受限于 `JS` 的动态特性与模块的复杂性，直至最新的 5.0 版本依然没有解决许多代码副作用带来的问题，使得优化效果并不如 `Tree Shaking` 原本设想的那么完美，所以需要使用者有意识地优化代码结构，或使用一些补丁技术帮助 `Webpack` 更精确地检测无效代码，完成 `Tree Shaking` 操作。
 
 #### 3.1 避免无意义的赋值
+
 使用 `Webpack` 时，需要有意识规避一些不必要的赋值操作，观察下面这段示例代码：
 ![](../assets/webpack/5.jpeg)
 
@@ -150,68 +170,74 @@ export default 'foo-bar'
 ![](../assets/webpack/6.jpeg)
 
 造成这一结果，浅层原因是 `Webpack` 的 `Tree Shaking` 逻辑停留在代码静态分析层面，只是浅显地判断：
+
 - 模块导出变量是否被其它模块引用
 - 引用模块的主体代码中有没有出现这个变量
 
 没有进一步，从语义上分析模块导出值是不是真的被有效使用。
 
 更深层次的原因则是 `JavaScript` 的赋值语句并不「纯」，视具体场景有可能产生意料之外的副作用，例如：
+
 ```js
 import { bar, foo } from "./bar";
 let count = 0;
-const mock = {}
-Object.defineProperty(mock, 'f', {
-    set(v) {
-        mock._f = v;
-        count += 1;
-    }
-})
+const mock = {};
+Object.defineProperty(mock, "f", {
+  set(v) {
+    mock._f = v;
+    count += 1;
+  },
+});
 mock.f = foo;
 console.log(count);
 ```
+
 示例中，对 `mock` 对象施加的 `Object.defineProperty` 调用，导致 `mock.f = foo` 赋值语句对 `count` 变量产生了副作用，这种场景下即使用复杂的动态语义分析也很难在确保正确副作用的前提下，完美地 `Shaking` 掉所有无用的代码枝叶。
 
 因此，在使用 `Webpack` 时开发者需要有意识地规避这些无意义的重复赋值操作。
 
 #### 3.3 使用 #pure 标注纯函数调用
-与赋值语句类似，`JavaScript` 中的函数调用语句也可能产生副作用，因此默认情况下 `Webpack` 并不会对函数调用做 `Tree Shaking` 操作。不过，开发者可以在调用语句前添加 /*#__PURE__*/ 备注，明确告诉 `Webpack` 该次函数调用并不会对上下文环境产生副作用，例如：
+
+与赋值语句类似，`JavaScript` 中的函数调用语句也可能产生副作用，因此默认情况下 `Webpack` 并不会对函数调用做 `Tree Shaking` 操作。不过，开发者可以在调用语句前添加 /_#**PURE**_/ 备注，明确告诉 `Webpack` 该次函数调用并不会对上下文环境产生副作用，例如：
 
 ![](../assets/webpack/7.jpeg)
-示例中，`foo('be retained')` 调用没有带上 /*#__PURE__*/ 备注，代码被保留；作为对比，`foo('be removed')` 带上 `Pure` 声明后则被 `Tree Shaking` 删除。
+示例中，`foo('be retained')` 调用没有带上 /_#**PURE**_/ 备注，代码被保留；作为对比，`foo('be removed')` 带上 `Pure` 声明后则被 `Tree Shaking` 删除。
 
 #### 3.3 禁止 `Babel` 转译模块导入导出语句
+
 `Babel` 是一个非常流行的 `JavaScript` 代码转换器，它能够将高版本的 `JS` 代码等价转译为兼容性更佳的低版本代码，使得前端开发者能够使用最新的语言特性开发出兼容旧版本浏览器的代码。
 
 但 `Babel` 提供的部分功能特性会致使 `Tree Shaking` 功能失效，例如 `Babel` 可以将 `import/export` 风格的 `ESM` 语句等价转译为 `CommonJS` 风格的模块化语句，但该功能却导致 `Webpack` 无法对转译后的模块导入导出内容做静态分析，示例：
 ![](../assets/webpack/8.jpeg)
 
-示例使用 `babel-loader` 处理 *.js 文件，并设置 `Babel` 配置项 `modules = 'commonjs'`，将模块化方案从 `ESM` 转译到 `CommonJS`，导致转译代码(右图上一)没有正确标记出未被使用的导出值 `foo`。作为对比，右图 2 为 `modules = false` 时打包的结果，此时 `foo` 变量被正确标记为 `Dead Code`。
+示例使用 `babel-loader` 处理 \*.js 文件，并设置 `Babel` 配置项 `modules = 'commonjs'`，将模块化方案从 `ESM` 转译到 `CommonJS`，导致转译代码(右图上一)没有正确标记出未被使用的导出值 `foo`。作为对比，右图 2 为 `modules = false` 时打包的结果，此时 `foo` 变量被正确标记为 `Dead Code`。
 
 所以，在 `Webpack` 中使用 `babel-loader` 时，建议将 `babel-preset-env` 的 `moduels` 配置项设置为 `false`，关闭模块导入导出语句的转译。
 
 #### 3.4 优化导出值的粒度
+
 `Tree Shaking` 逻辑作用在 `ESM` 的 `export` 语句上，因此对于下面这种导出场景：
+
 ```js
 export default {
-    bar: 'bar',
-    foo: 'foo'
-}
+  bar: "bar",
+  foo: "foo",
+};
 ```
 
 即使实际上只用到 `default` 导出值的其中一个属性，整个 `default` 对象依然会被完整保留。所以实际开发中，应该尽量保持导出值颗粒度和原子性，上例代码的优化版本：
 
 ```js
-const bar = 'bar'
-const foo = 'foo'
+const bar = "bar";
+const foo = "foo";
 
-export {
-    bar,
-    foo
-}
+export { bar, foo };
 ```
 
 #### 3.5 使用支持 `Tree Shaking` 的包
+
 如果可以的话，应尽量使用支持 `Tree Shaking` 的 `npm` 包，例如：
+
 - 使用 `lodash-es` 替代 `lodash` ，或者使用 `babel-plugin-lodash` 实现类似效果
 
 不过，并不是所有 `npm` 包都存在 `Tree Shaking` 的空间，诸如 `React`、`Vue2` 一类的框架原本已经对生产版本做了足够极致的优化，此时业务代码需要整个代码包提供的完整功能，基本上不太需要进行 `Tree Shaking`。
