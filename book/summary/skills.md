@@ -118,15 +118,15 @@
 
 #### 原型和原型链
 
-``js
+```js
 function Foo() {}
 
 const foo = new Foo();
-Foo.**proto** === Function.prototype // true
-foo.**proto** === Foo.prototype // true
-Foo.prototype.**proto** === Object.prototype // true
-Foo.prototype.**proto**.**proto** === null // true
-``
+Foo.proto === Function.prototype; // true
+foo.proto === Foo.prototype; // true
+Foo.prototype.proto === Object.prototype; // true
+Foo.prototype.proto.proto === null; // true
+```
 
 #### `CSRF`攻击原理和防护
 

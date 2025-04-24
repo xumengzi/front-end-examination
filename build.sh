@@ -10,6 +10,6 @@ echo '改名'
 mv _book book
 
 echo '提交github'
-git add . && git commit -m 'add: 修改一些文案样式错误' && git push
+git add . && git commit -m 'fix: 修改一些文案样式错误' && git push
 
 echo '成功'
