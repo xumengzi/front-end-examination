@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>表演10万个节点</title>
+  </head>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f0f0f0;
+    }
+    div {
+      width: 200px;
+      height: 400px;
+      contain: strict;
+      background-color: #4caf50;
+      margin: 10px;
+      overflow: auto;
+      display: inline-block;
+      transform: translateZ(0);
+      will-change: transform;
+    }
+  </style>
+  <body>
+    <button id="btn">click</button>
+    <img
+      src="http://10.58.68.7:8080/objects/kgm-bucket-dev/datasets/170/data/sa_000001_sa_17542_202407262056.jpg?height=240"
+      alt=""
+    />
+    <p id="show"></p>
+    <div id="container">
+      <ul></ul>
+    </div>
+  </body>
+  <script>
+    const container = document.getElementById("container");
+    const ul = container.querySelector("ul");
+    const show = document.getElementById("show");
+
+    document.getElementById("btn").addEventListener("click", function () {
+      console.time("addLi");
+      //ul.innerHTML = ""; // 清空现有的列表项
+      addLi();
+      show.innerHTML = "LI节点数是:" + ul.children.length;
+      console.timeEnd("addLi");
+    });
+
+    function addLi() {
+      const temp = document.createDocumentFragment();
+      for (let i = 1; i <= 5000; i++) {
+        const li = document.createElement("li");
+        li.textContent = i;
+        temp.appendChild(li);
+      }
+      ul.appendChild(temp);
+    }
+
+    const observer = new PerformanceObserver((list) => {
+      list.getEntries().forEach((entry) => {
+        if (entry.duration >= 0) {
+          console.log("长任务:", entry);
+        }
+      });
+    });
+    observer.observe({
+      type: "paint",
+      buffered: true,
+    });
+
+    setTimeout(() => {
+      observer.disconnect();
+      console.log("PerformanceObserver 已断开连接");
+    }, 10000);
+  </script>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebWorker</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0;
+      }
+      div {
+        width: 200px;
+        height: 400px;
+        contain: strict;
+        background-color: #4caf50;
+        margin: 10px;
+        overflow: auto;
+        display: inline-block;
+        transform: translateZ(0);
+        will-change: transform;
+      }
+    </style>
+  </head>
+  <body>
+    <div>div元素</div>
+    <button id="btn">click</button>
+    <script>
+      if (Worker) {
+        const worker = new Worker("./worker.js");
+        document.getElementById("btn").onclick = function () {
+          worker.postMessage("发送消息");
+        };
+
+        worker.onmessage = function (e) {
+          console.log("Worker message:", e.data);
+        };
+      }
+    </script>
+  </body>
+</html>

@@ -253,7 +253,7 @@ customizeInstance(num, Number); // true
 
 ### 请实现深拷贝函数
 
-需要注意的是，有些 hack 方法是有缺点的，比如扩展运算符，JSON.parse(JSON.stringify)
+需要注意的是，有些 hack 方法是有缺点的，比如扩展运算符`...`，`JSON.parse(JSON.stringify)`
 
 ```js
 //请实现深拷贝函数
@@ -261,9 +261,11 @@ function deepCopy(obj) {
   var result = Array.isArray(obj) ? [] : {};
   for (var i in obj) {
     if (typeof obj[i] === "object") {
+      // 处理null，undefined情况
       if (!obj[i]) {
         result[i] = obj[i];
       } else {
+        // 数组，对象等情况
         result[i] = deepCopy(obj[i]);
       }
     } else {
@@ -708,7 +710,7 @@ foo.bind(obj)(); // 10
 2. 碰到一些浏览器的`web api`的时候，就会把这些任务放到一个专门处理这些任务的地方，也叫任务队列
 3. 只有等当前执行栈里为空了，才会把任务队列里的代码拿过来执行
 4. 以此类推。
-5. `settimeout`，`setInterval`，`Ajax`等属于宏任务
+5. `setTimeout`，`setInterval`，`Ajax`等属于宏任务
 6. `promise`的`then`，`process`的`nexttick`方法属于微任务，优先级比宏任务高
 
 ```js
@@ -914,4 +916,36 @@ bfsQueue(tree).join("->"); // 1->2->7->8->3->6->9->12->4->5->10->11
 
 ### 带并发的异步调度器`Scheduler`
 
-`continue`
+```js
+class Scheduler {
+  constructor(max) {
+    this.maxCount = max;
+    this.activeCount = 0;
+    this.queue = [];
+  }
+  addTask(task) {
+    return new Promise((resolve, reject) => {
+      const taskWarpper = () => {
+        this.activeCount++;
+        task()
+          .then(resolve, reject)
+          .finally(() => {
+            this.activeCount--;
+            this._nextTask();
+          });
+      };
+      if (this.activeCount < this.maxCount) {
+        taskWarpper();
+      } else {
+        this.queue.push(taskWarpper);
+      }
+    });
+  }
+  _nextTask() {
+    if (this.queue.length && this.activeCount < this.maxCount) {
+      const tempTask = this.queue.shift();
+      tempTask();
+    }
+  }
+}
+```
