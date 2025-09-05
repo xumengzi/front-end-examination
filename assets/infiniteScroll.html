@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>无限滚动列表 - React实现</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        color: #333;
+        line-height: 1.6;
+        padding: 20px;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+      header {
+        background: #4a6fa5;
+        color: white;
+        padding: 20px;
+        text-align: center;
+      }
+      h1 {
+        font-size: 24px;
+        margin-bottom: 8px;
+      }
+      .subtitle {
+        font-size: 14px;
+        opacity: 0.8;
+      }
+      .list-container {
+        height: 500px;
+        overflow-y: auto;
+        position: relative;
+        border: 1px solid #e1e1e1;
+      }
+      .list {
+        position: relative;
+        width: 100%;
+      }
+      .list-item {
+        padding: 16px 20px;
+        border-bottom: 1px solid #eee;
+        position: absolute;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        transition: background-color 0.2s;
+      }
+      .list-item:hover {
+        background-color: #f9f9f9;
+      }
+      .avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: #4a6fa5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        margin-right: 15px;
+        flex-shrink: 0;
+      }
+      .content {
+        flex: 1;
+      }
+      .name {
+        font-weight: 600;
+        margin-bottom: 5px;
+      }
+      .email {
+        color: #666;
+        font-size: 14px;
+      }
+      .loader {
+        padding: 20px;
+        text-align: center;
+        color: #666;
+      }
+      .error {
+        padding: 20px;
+        text-align: center;
+        color: #e74c3c;
+      }
+      .stats {
+        padding: 15px 20px;
+        background: #f8f9fa;
+        border-top: 1px solid #e1e1e1;
+        font-size: 14px;
+        color: #666;
+        display: flex;
+        justify-content: space-between;
+      }
+      .controls {
+        padding: 15px 20px;
+        background: #f8f9fa;
+        border-top: 1px solid #e1e1e1;
+        display: flex;
+        gap: 10px;
+      }
+      button {
+        padding: 8px 16px;
+        background: #4a6fa5;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      button:hover {
+        background: #3a5a80;
+      }
+      .scroll-to {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      input {
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        width: 80px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const { useState, useEffect, useCallback, useRef, useMemo } = React;
+
+      // 模拟API请求
+      const fetchData = async (startIndex, count) => {
+        // 模拟网络延迟
+        await new Promise((resolve) =>
+          setTimeout(resolve, 500 + Math.random() * 500)
+        );
+
+        // 模拟偶尔失败
+        if (Math.random() < 0.1) {
+          throw new Error("随机API错误");
+        }
+
+        const data = [];
+        for (let i = 0; i < count; i++) {
+          const id = startIndex + i;
+          data.push({
+            id,
+            name: `用户 ${id}`,
+            email: `user${id}@example.com`,
+            avatar: `U${id}`,
+          });
+        }
+        return data;
+      };
+
+      // 列表项组件
+      const ListItem = React.memo(({ item, style }) => {
+        return (
+          <div className="list-item" style={style}>
+            <div className="avatar">{item.avatar}</div>
+            <div className="content">
+              <div className="name">{item.name}</div>
+              <div className="email">{item.email}</div>
+            </div>
+          </div>
+        );
+      });
+
+      // 无限滚动列表组件
+      const InfiniteScrollList = () => {
+        const [data, setData] = useState([]);
+        const [loading, setLoading] = useState(false);
+        const [error, setError] = useState(null);
+        const [hasMore, setHasMore] = useState(true);
+        const [scrollTop, setScrollTop] = useState(0);
+        const containerRef = useRef(null);
+        const observer = useRef(null);
+
+        // 缓存已加载的数据
+        const dataCache = useRef(new Map());
+
+        // 列表项高度
+        const ITEM_HEIGHT = 82;
+        // 可视区域上下缓冲的项数
+        const BUFFER = 5;
+
+        // 加载更多数据
+        const loadMore = useCallback(async () => {
+          if (loading || !hasMore) return;
+
+          setLoading(true);
+          setError(null);
+
+          try {
+            const startIndex = data.length;
+
+            // 检查缓存
+            if (dataCache.current.has(startIndex)) {
+              const cachedData = dataCache.current.get(startIndex);
+              setData((prev) => [...prev, ...cachedData]);
+              setLoading(false);
+              return;
+            }
+
+            const newData = await fetchData(startIndex, 20);
+            if (newData.length === 0) {
+              setHasMore(false);
+            } else {
+              // 缓存数据
+              dataCache.current.set(startIndex, newData);
+              setData((prev) => [...prev, ...newData]);
+            }
+          } catch (err) {
+            setError(err.message);
+          } finally {
+            setLoading(false);
+          }
+        }, [loading, hasMore, data.length]);
+
+        // 初始化Intersection Observer
+        useEffect(() => {
+          const options = {
+            root: containerRef.current,
+            rootMargin: "0px 0px 100px 0px",
+            threshold: 0.1,
+          };
+
+          observer.current = new IntersectionObserver((entries) => {
+            console.log("entries", entries[0]);
+            if (entries[0].isIntersecting) {
+              loadMore();
+            }
+          }, options);
+
+          // 创建并观察触底检测元素
+          const sentinel = document.createElement("div");
+          sentinel.id = "scroll-sentinel";
+          containerRef.current.appendChild(sentinel);
+          observer.current.observe(sentinel);
+
+          return () => {
+            if (observer.current) {
+              observer.current.disconnect();
+            }
+          };
+        }, [loadMore]);
+
+        // 处理滚动事件
+        useEffect(() => {
+          const handleScroll = () => {
+            setScrollTop(containerRef.current?.scrollTop || 0);
+          };
+
+          const container = containerRef.current;
+          if (container) {
+            container.addEventListener("scroll", handleScroll);
+            return () => container.removeEventListener("scroll", handleScroll);
+          }
+        }, []);
+
+        // 计算可视区域内的项
+        const { visibleItems, totalHeight } = useMemo(() => {
+          const containerHeight = containerRef.current?.clientHeight || 0;
+          const startIndex = Math.max(
+            0,
+            Math.floor(scrollTop / ITEM_HEIGHT) - BUFFER
+          );
+          const endIndex = Math.min(
+            data.length,
+            startIndex + Math.ceil(containerHeight / ITEM_HEIGHT) + 2 * BUFFER
+          );
+
+          const visibleItems = data
+            .slice(startIndex, endIndex)
+            .map((item, index) => ({
+              ...item,
+              top: (startIndex + index) * ITEM_HEIGHT,
+            }));
+
+          return {
+            visibleItems,
+            totalHeight: data.length * ITEM_HEIGHT,
+          };
+        }, [data, scrollTop]);
+
+        // 滚动到指定位置
+        const scrollToIndex = useCallback((index) => {
+          if (containerRef.current) {
+            containerRef.current.scrollTo({
+              top: index * ITEM_HEIGHT,
+              behavior: "smooth",
+            });
+          }
+        }, []);
+
+        // 重新加载
+        const reload = useCallback(() => {
+          setData([]);
+          dataCache.current.clear();
+          setHasMore(true);
+          setError(null);
+          if (containerRef.current) {
+            containerRef.current.scrollTo(0, 0);
+          }
+          loadMore();
+        }, [loadMore]);
+
+        return (
+          <div className="container">
+            <header>
+              <h1>无限滚动列表</h1>
+              <div className="subtitle">带虚拟化渲染和性能优化</div>
+            </header>
+
+            <div className="controls">
+              <button onClick={reload}>重新加载</button>
+              <div className="scroll-to">
+                <span>跳转到:</span>
+                <input
+                  type="number"
+                  min="0"
+                  max={data.length - 1}
+                  defaultValue="0"
+                  id="scroll-index"
+                />
+                <button
+                  onClick={() => {
+                    const index = parseInt(
+                      document.getElementById("scroll-index").value
+                    );
+                    if (!isNaN(index) && index >= 0 && index < data.length) {
+                      scrollToIndex(index);
+                    }
+                  }}
+                >
+                  跳转
+                </button>
+              </div>
+            </div>
+
+            <div className="list-container" ref={containerRef}>
+              <div className="list" style={{ height: `${totalHeight}px` }}>
+                {visibleItems.map((item) => (
+                  <ListItem
+                    key={item.id}
+                    item={item}
+                    style={{
+                      top: `${item.top}px`,
+                      height: `${ITEM_HEIGHT}px`,
+                    }}
+                  />
+                ))}
+              </div>
+
+              {loading && <div className="loader">加载中...</div>}
+
+              {error && (
+                <div className="error">
+                  <p>错误: {error}</p>
+                  <button onClick={loadMore}>重试</button>
+                </div>
+              )}
+
+              {!hasMore && data.length > 0 && (
+                <div className="loader">没有更多数据了</div>
+              )}
+            </div>
+
+            <div className="stats">
+              <span>总项目数: {data.length}</span>
+              <span>可见项目: {visibleItems.length}</span>
+              <span>滚动位置: {Math.round(scrollTop)}px</span>
+            </div>
+          </div>
+        );
+      };
+
+      const App = () => {
+        return <InfiniteScrollList />;
+      };
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>
