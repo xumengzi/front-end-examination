@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>0.8 面试-编程相关 · front-end-examination</title>
+        <title>1.3 面试-京东面试 · front-end-examination</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -65,10 +65,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="09.html" />
+    <link rel="next" href="14.html" />
     
     
-    <link rel="prev" href="07.html" />
+    <link rel="prev" href="12.html" />
     
 
     </head>
@@ -590,7 +590,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.8.8" data-path="08.html">
+        <li class="chapter " data-level="1.8.8" data-path="08.html">
             
                 <a href="08.html">
             
@@ -655,7 +655,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.8.13" data-path="13.html">
+        <li class="chapter active" data-level="1.8.13" data-path="13.html">
             
                 <a href="13.html">
             
@@ -716,7 +716,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >0.8 面试-编程相关</a>
+        <a href=".." >1.3 面试-京东面试</a>
     </h1>
 </div>
 
@@ -731,95 +731,67 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h3 id="2025-08-25-&#x6A21;&#x62DF;&#x9762;&#x8BD5;&#xFF08;&#x516B;&#xFF09;">2025-08-25 &#x6A21;&#x62DF;&#x9762;&#x8BD5;&#xFF08;&#x516B;&#xFF09;</h3>
+                                <h3 id="2025-08-19-&#x4EAC;&#x4E1C;&#x9762;&#x8BD5;">2025-08-19 &#x4EAC;&#x4E1C;&#x9762;&#x8BD5;</h3>
+<h5 id="&#x4E00;&#x3001;&#x9879;&#x76EE;&#x6DF1;&#x5EA6;&#x8003;&#x5BDF;">&#x4E00;&#x3001;&#x9879;&#x76EE;&#x6DF1;&#x5EA6;&#x8003;&#x5BDF;</h5>
 <ol>
-<li>&#x5B9E;&#x73B0;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#xFF0C;&#x5C06;&#x9A7C;&#x5CF0;&#x547D;&#x540D;&#x6CD5;&#x5B57;&#x7B26;&#x4E32;&#x8F6C;&#x6362;&#x4E3A;&#x8FDE;&#x5B57;&#x7B26;&#x547D;&#x540D;&#x6CD5;
-&#x9898;&#x76EE;&#xFF1A; camelCaseToKebabCase(&apos;getElementById&apos;) &#x5E94;&#x8BE5;&#x8FD4;&#x56DE; &apos;get-element-by-id&apos;&#x3002;
-&#x8003;&#x5BDF;&#x70B9;&#xFF1A; &#x5B57;&#x7B26;&#x4E32;&#x904D;&#x5386;&#x3001;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x3002;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x662F;&#x66F4;&#x4F18;&#x96C5;&#x7684;&#x89E3;&#x51B3;&#x65B9;&#x6848;&#x3002;
-&#x8FDB;&#x9636;&#xFF1A; &#x5982;&#x4F55;&#x5904;&#x7406;&#x9996;&#x5B57;&#x6BCD;&#x5927;&#x5199;&#x7684;&#x60C5;&#x51B5;&#xFF1F;(&#x4F8B;&#x5982; HelloWorld -&gt; hello-world)</li>
+<li>&#x77E5;&#x9053;&#x8DE8;&#x7AEF;&#x6846;&#x67B6;&#x7684;&#x5B9E;&#x73B0;&#x539F;&#x7406;&#x5417;&#xFF1F;&#x6BD4;&#x5982;&#x9762;&#x8BD5;&#x65F6;&#x6211;&#x8BB2;&#x4E86;mux&#xFF0C;&#x8FD9;&#x662F;&#x4E2A;&#x8DE8;&#x7AEF;&#x7684;&#x6846;&#x67B6;
+&#x6838;&#x5FC3;&#x67B6;&#x6784;&#xFF1A;&#x7F16;&#x8BD1;&#x65F6;+&#x8FD0;&#x884C;&#x65F6;</li>
 </ol>
-<pre><code class="lang-js"><span class="hljs-comment">// &#x666E;&#x901A;&#x5FAA;&#x73AF;</span>
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">strFormat</span>(<span class="hljs-params">str</span>) </span>{
-  <span class="hljs-keyword">if</span> (!str) {
-    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span>;
-  }
-  <span class="hljs-keyword">var</span> result = <span class="hljs-string">&quot;&quot;</span>;
-  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> index = <span class="hljs-number">0</span>; index &lt; str.length; index++) {
-    <span class="hljs-keyword">if</span> (<span class="hljs-regexp">/[A-Z]/</span>.test(str[index])) {
-      <span class="hljs-keyword">if</span> (index === <span class="hljs-number">0</span>) {
-        result = str[index].toLowerCase();
-      } <span class="hljs-keyword">else</span> {
-        result += <span class="hljs-string">&quot;-&quot;</span> + str[index].toLowerCase();
-      }
-    } <span class="hljs-keyword">else</span> {
-      result += str[index];
-    }
-  }
-  <span class="hljs-keyword">return</span> result;
-}
-
-<span class="hljs-comment">// &#x6B63;&#x5219;&#x5FAA;&#x73AF;&#xFF0C;&#x7279;&#x6B8A;&#x5904;&#x7406;&#x4E00;&#x4E0B;&#x7B2C;&#x4E00;&#x4E2A;&#x5B57;&#x6BCD;&#x7684;&#x60C5;&#x51B5;</span>
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">strFormat</span>(<span class="hljs-params">str</span>) </span>{
-  str = str.replace(<span class="hljs-regexp">/([A-Z])/g</span>, <span class="hljs-string">&quot;-$1&quot;</span>).toLowerCase();
-  <span class="hljs-keyword">if</span> (str.charAt(<span class="hljs-string">&quot;-&quot;</span>) === <span class="hljs-string">&quot;-&quot;</span>) {
-    str = str.slice(<span class="hljs-number">1</span>);
-  }
-  <span class="hljs-keyword">return</span> str;
-}
-
-<span class="hljs-built_in">console</span>.log(strFormat(<span class="hljs-string">&quot;helloWorld&quot;</span>)); <span class="hljs-comment">// hello-world</span>
-<span class="hljs-built_in">console</span>.log(strFormat(<span class="hljs-string">&quot;getElementById&quot;</span>)); <span class="hljs-comment">// get-element-by-id</span>
+<h6 id="&#x7F16;&#x8BD1;&#x65F6;">&#x7F16;&#x8BD1;&#x65F6;</h6>
+<p>&#x7F16;&#x8BD1;&#x65F6;&#x662F;&#x5C06;&#x5F00;&#x53D1;&#x8005;&#x7F16;&#x5199;&#x7684;&#x7EDF;&#x4E00;&#x8BED;&#x6CD5;&#xFF08;&#x6BD4;&#x5982;vue&#xFF0C;react&#xFF09;&#x7684;&#x4EE3;&#x7801;&#xFF0C;&#x8F6C;&#x6362;&#x6210;&#x5404;&#x4E2A;&#x76EE;&#x6807;&#x5E73;&#x53F0;&#x80FD;&#x591F;&#x8BC6;&#x522B;&#x7684;&#x4EE3;&#x7801;&#x3002;
+&#x4E3B;&#x8981;&#x5DE5;&#x4F5C;&#x5305;&#x62EC;&#xFF1A;</p>
+<ol>
+<li>&#x8BED;&#x6CD5;&#x8F6C;&#x6362;<ol>
+<li>jsx/vue =&gt; &#x5C0F;&#x7A0B;&#x5E8F;&#x7684;wxml&#x7B49;&#xFF1A;&#x8FD9;&#x662F;&#x6838;&#x5FC3;&#x7684;&#x8F6C;&#x6362;&#x3002;&#x6846;&#x67B6;&#x4F1A;&#x5C06;&#x81EA;&#x5DF1;&#x7684;&#x6A21;&#x677F;&#x8BED;&#x6CD5;&#x901A;&#x8FC7;AST&#x6280;&#x672F;&#x89E3;&#x6790;&#xFF0C;&#x7136;&#x540E;&#x6839;&#x636E;&#x76EE;&#x6807;&#x5E73;&#x53F0;&#x7684;&#x6A21;&#x677F;&#x8BED;&#x6CD5;&#x89C4;&#x5219;&#x751F;&#x6210;&#x5BF9;&#x5E94;&#x7684;&#x6A21;&#x677F;&#x6587;&#x4EF6;&#x3002;</li>
+<li>&#x4F8B;&#x5982;&#x5199;&#x4E86;&#x4E00;&#x6BB5;&#x901A;&#x7528;&#x4EE3;&#x7801;<component>hello</component>&#xFF0C;&#x5728;&#x5C0F;&#x7A0B;&#x5E8F;&#x7AEF;&#x7F16;&#x8BD1;&#x65F6;&#xFF0C;&#x5B83;&#x4F1A;&#x88AB;&#x8F6C;&#x6362;&#x6210;<view>hello</view>&#xFF0C;&#x5728;vue&#x4E2D;&#x5219;&#x4F1A;&#x88AB;&#x7F16;&#x8BD1;&#x6210;<div>hello</div></li>
+</ol>
+</li>
+<li>&#x6837;&#x5F0F;&#x5904;&#x7406;&#xFF1A;<ol>
+<li>css=&gt;wxss&#xFF1A;&#x5BF9;css&#x6587;&#x4EF6;&#x8FDB;&#x884C;&#x540E;&#x7F00;&#x540D;&#x8F6C;&#x6362;&#x548C;&#x5185;&#x5BB9;&#x9002;&#x914D;&#x3002;&#x4F8B;&#x5982;&#x5C06;px&#x8F6C;&#x6362;&#x4E3A;&#x5C0F;&#x7A0B;&#x5E8F;&#x7684;rpx&#xFF0C;&#x6216;&#x8005;&#x5904;&#x7406;&#x4E00;&#x4E9B;&#x6837;&#x5F0F;&#x7684;&#x517C;&#x5BB9;&#x6027;&#x8865;&#x5168;&#x3002;</li>
+</ol>
+</li>
+<li>JS&#x5904;&#x7406;<ol>
+<li>API&#x6620;&#x5C04;&#xFF1A;&#x5C06;&#x6846;&#x67B6;&#x7EDF;&#x4E00;&#x7684;API&#x8C03;&#x7528;&#x8F6C;&#x6362;&#x4E3A;&#x76EE;&#x6807;&#x5E73;&#x53F0;&#x7684;API&#x8C03;&#x7528;&#x3002;&#x8FD9;&#x662F;&#x901A;&#x8FC7;babel&#x63D2;&#x4EF6;&#x6216;&#x8005;&#x81EA;&#x7814;&#x7684;&#x8F6C;&#x6362;&#x5668;&#x5B8C;&#x6210;&#x7684;&#x3002;&#x4F8B;&#x5982;&#xFF0C;&#x4F60;&#x8C03;&#x7528;Taro.request()&#xFF0C;&#x5728;&#x7F16;&#x8BD1;&#x6210;&#x5C0F;&#x7A0B;&#x5E8F;&#x65F6;&#xFF0C;&#x5C31;&#x4F1A;&#x88AB;&#x8F6C;&#x6362;&#x6210;wx.request()&#xFF0C;&#x5728;&#x7F16;&#x8BD1;&#x6210;&#x6D4F;&#x89C8;&#x5668;&#x8BBF;&#x95EE;&#x65F6;&#xFF0C;&#x53EF;&#x80FD;&#x4F1A;&#x88AB;&#x8F6C;&#x6362;&#x4E3A;fetch&#x6216;&#x8005;XMLHttpRequest&#x3002;</li>
+<li>&#x7EC4;&#x4EF6;&#x6620;&#x5C04;&#xFF1A;&#x5C06;&#x6846;&#x67B6;&#x5185;&#x7F6E;&#x7684;&#x7EC4;&#x4EF6;&#x6BD4;&#x5982;<button>click</button>&#x8F6C;&#x6362;&#x4E3A;&#x5C0F;&#x7A0B;&#x5E8F;&#x4EE5;&#x53CA;web&#x7AEF;&#x7684;<button>click</button></li>
+</ol>
+</li>
+<li>&#x6587;&#x4EF6;&#x7ED3;&#x6784;&#x91CD;&#x7EC4;<ol>
+<li>&#x5C0F;&#x7A0B;&#x5E8F;&#x8981;&#x6C42;&#x7279;&#x5B9A;&#x7684;&#x6587;&#x4EF6;&#x7ED3;&#x6784;&#xFF08;&#x6BD4;&#x5982;app.js,app.json,page.wxml,page.wxss,page.js&#xFF09;&#x3002;&#x7F16;&#x8BD1;&#x65F6;&#x4F1A;&#x6839;&#x636E;&#x6E90;&#x4EE3;&#x7801;&#x7684;&#x9875;&#x9762;&#x548C;&#x7EC4;&#x4EF6;&#x7ED3;&#x6784;&#xFF0C;&#x751F;&#x6210;&#x7B26;&#x5408;&#x76EE;&#x6807;&#x5C0F;&#x7A0B;&#x5E8F;&#x89C4;&#x8303;&#x7684;&#x6587;&#x4EF6;&#x76EE;&#x5F55;&#x548C;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF08;&#x6BD4;&#x5982;app.json&#x91CC;&#x9700;&#x8981;&#x6CE8;&#x518C;&#x6240;&#x6709;&#x9875;&#x9762;&#xFF09;</li>
+</ol>
+</li>
+</ol>
+<h6 id="&#x8FD0;&#x884C;&#x65F6;">&#x8FD0;&#x884C;&#x65F6;</h6>
+<p>&#x8FD0;&#x884C;&#x65F6;&#x662F;&#x6846;&#x67B6;&#x5728;&#x4EE3;&#x7801;&#x5B9E;&#x9645;&#x6267;&#x884C;&#x65F6;&#x8FDB;&#x884C;&#x534F;&#x8C03;&#x548C;&#x9002;&#x914D;&#x7684;&#x9636;&#x6BB5;&#x3002;&#x5B83;&#x50CF;&#x4E00;&#x4E2A;&#x7FFB;&#x8BD1;&#x5B98;&#xFF0C;&#x5728;&#x7A0B;&#x5E8F;&#x8FD0;&#x884C;&#x671F;&#x95F4;&#x534F;&#x8C03;&#x5F00;&#x53D1;&#x8005;&#x4EE3;&#x7801;&#x4E0E;&#x539F;&#x751F;&#x5E73;&#x53F0;&#x4E4B;&#x95F4;&#x7684;&#x5DEE;&#x5F02;&#x3002;
+&#x4E3B;&#x8981;&#x5DE5;&#x4F5C;&#x5305;&#x62EC;&#xFF1A;</p>
+<ol>
+<li>&#x5B9E;&#x73B0;&#x6838;&#x5FC3;&#x6807;&#x51C6;&#xFF1A;&#x63D0;&#x4F9B;&#x4E00;&#x4E2A;&#x7B26;&#x5408;web&#x6807;&#x51C6;&#x6216;&#x8005;&#x81EA;&#x5B9A;&#x4E49;&#x6807;&#x51C6;&#x7684;&#x8FD0;&#x884C;&#x73AF;&#x5883;<ol>
+<li>&#x5728;&#x5C0F;&#x7A0B;&#x5E8F;&#x73AF;&#x5883;&#x91CC;&#x6A21;&#x62DF;&#x7684;&#x4E00;&#x4E2A;&#x8FF7;&#x4F60;&#x7248;&#x7684;Browser/DOM&#x73AF;&#x5883;&#x3002;</li>
+</ol>
+</li>
+<li>&#x7EC4;&#x4EF6;&#x6811;&#x548C;&#x751F;&#x547D;&#x5468;&#x671F;&#x7BA1;&#x7406;&#xFF1A;&#x8FD0;&#x884C;&#x65F6;&#x7EF4;&#x62A4;&#x7740;&#x6574;&#x4E2A;&#x7EC4;&#x4EF6;&#x6811;&#x7684;&#x865A;&#x62DF;&#x8868;&#x793A;&#xFF08;&#x4E5F;&#x5C31;&#x662F;&#x865A;&#x62DF;DOM&#xFF09;&#xFF0C;&#x5E76;&#x8D1F;&#x8D23;&#x89E6;&#x53D1;&#x7EC4;&#x4EF6;&#x7684;&#x751F;&#x547D;&#x5468;&#x671F;&#xFF08;&#x5982;onLoad&#xFF0C;onReady&#xFF09;&#xFF0C;&#x5C06;&#x8FD9;&#x4E9B;&#x751F;&#x547D;&#x5468;&#x671F;&#x6620;&#x5C04;&#x5230;Vue/React&#x7EC4;&#x4EF6;&#x7684;mount&#xFF0C;updated&#x7B49;&#x94A9;&#x5B50;</li>
+<li>API&#x4EE3;&#x7406;&#xFF1A;&#x5728;&#x8FD0;&#x884C;&#x65F6;&#xFF0C;&#x6846;&#x67B6;&#x7EDF;&#x4E00;&#x7684;API&#x5176;&#x5B9E;&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x4EE3;&#x7406;&#x51FD;&#x6570;&#x3002;&#x5B83;&#x4F1A;&#x6839;&#x636E;&#x5F53;&#x524D;&#x7684;&#x8FD0;&#x884C;&#x73AF;&#x5883;&#xFF0C;&#x52A8;&#x6001;&#x5730;&#x53BB;&#x8C03;&#x7528;&#x771F;&#x6B63;&#x7684;&#x539F;&#x751F;API&#xFF08;wx.reequest,featch&#xFF09;&#x3002;</li>
+<li>&#x6E32;&#x67D3;&#x5668;&#xFF1A;&#x8FD9;&#x662F;&#x8FD0;&#x884C;&#x65F6;&#x7684;&#x6700;&#x6838;&#x5FC3;&#x7684;&#x90E8;&#x95E8;&#x3002;&#x8D1F;&#x8D23;&#x5C06;&#x6846;&#x67B6;&#x7EF4;&#x62A4;&#x7684;&#x865A;&#x62DF;DOM&#x6811;&#x6E32;&#x67D3;&#x5230;&#x5177;&#x4F53;&#x7684;&#x5E73;&#x53F0;&#x89C6;&#x56FE;&#x4E0A;&#x3002;<ol>
+<li>&#x5BF9;&#x4E8E;web&#xFF1A;&#x4F7F;&#x7528;ReactDOM.render()&#x6216;Vue&#x7684;&#x6E32;&#x67D3;&#x51FD;&#x6570;&#x76F4;&#x63A5;&#x6E32;&#x67D3;&#x5230;&#x6D4F;&#x89C8;&#x5668;DOM&#x3002;</li>
+<li>&#x5BF9;&#x4E8E;&#x5C0F;&#x7A0B;&#x5E8F;&#xFF1A;&#x6E32;&#x67D3;&#x5668;&#x4F1A;&#x5C06;VDOM&#x6811;&#x9012;&#x5F52;&#x904D;&#x5386;&#xFF0C;&#x8BA1;&#x7B97;&#x6BCF;&#x4E00;&#x6B65;&#x7684;setData&#x6570;&#x636E;&#xFF0C;&#x7136;&#x540E;&#x8C03;&#x7528;&#x5C0F;&#x7A0B;&#x5E8F;&#x7684;Page&#x6216;Component&#x7684;setData&#x65B9;&#x6CD5;&#xFF0C;&#x5C06;&#x6570;&#x636E;&#x6620;&#x5C04;&#x5230;&#x5C0F;&#x7A0B;&#x5E8F;&#x7684;&#x6A21;&#x677F;&#x4E2D;&#xFF0C;&#x4ECE;&#x800C;&#x66F4;&#x65B0;&#x89C6;&#x56FE;&#x3002;</li>
+</ol>
+</li>
+</ol>
+<p>&#x603B;&#x7ED3;&#xFF1A;&#x8DE8;&#x7AEF;&#x6846;&#x67B6;&#x7684;&#x6838;&#x5FC3;&#x539F;&#x7406;&#x662F;&#x201C;&#x7F16;&#x8BD1;&#x65F6;&#x8F6C;&#x6362;&#x201D;+&#x201C;&#x8FD0;&#x884C;&#x65F6;&#x9002;&#x914D;&#x201D;&#x7684;&#x7EC4;&#x5408;&#x3002;</p>
+<pre><code class="lang-bash">npm run dev:h5
+npm run dev:pc
+npm run dev:all
 </code></pre>
 <ol>
-<li>&#x89E3;&#x6790; URL &#x53C2;&#x6570;
-&#x9898;&#x76EE;&#xFF1A; &#x5B9E;&#x73B0;&#x4E00;&#x4E2A;&#x51FD;&#x6570; getUrlParams(url)&#xFF0C;&#x5C06; URL &#x7684;&#x67E5;&#x8BE2;&#x53C2;&#x6570;&#x89E3;&#x6790;&#x4E3A;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x3002;
-&#x793A;&#x4F8B;&#xFF1A; getUrlParams(&apos;<a href="https://example.com?name=john&amp;age=30" target="_blank">https://example.com?name=john&amp;age=30</a>&apos;) &#x8FD4;&#x56DE; {name: &apos;john&apos;, age: &apos;30&apos;}&#x3002;
-&#x8003;&#x5BDF;&#x70B9;&#xFF1A; &#x5B57;&#x7B26;&#x4E32;&#x5206;&#x5272; (split)&#x3001;URLSearchParams API (&#x5982;&#x679C;&#x80FD;&#x8BF4;&#x51FA;&#x8FD9;&#x4E2A;&#x539F;&#x751F; API &#x5E76;&#x624B;&#x52A8;&#x5B9E;&#x73B0;&#xFF0C;&#x662F;&#x52A0;&#x5206;&#x9879;)&#x3001;&#x8FB9;&#x754C;&#x5904;&#x7406;&#xFF08;&#x6CA1;&#x6709;&#x53C2;&#x6570;&#x3001;&#x91CD;&#x590D;&#x53C2;&#x6570;&#x3001;&#x6570;&#x7EC4;&#x53C2;&#x6570;?a=1&amp;a=2&#xFF09;&#x3002;</li>
+<li>&#x7F16;&#x8BD1;&#x65F6;&#xFF1A;&#x5C06;&#x5F00;&#x53D1;&#x8005;&#x7F16;&#x5199;&#x7684;&#x4E00;&#x5957;&#x4EE3;&#x7801;&#xFF0C;&#x901A;&#x8FC7;&#x7F16;&#x8BD1;&#x5DE5;&#x5177;&#x8F6C;&#x6362;&#x6210;&#x5404;&#x4E2A;&#x76EE;&#x6807;&#x5E73;&#x53F0;&#x80FD;&#x8BC6;&#x522B;&#x7684;&#x6587;&#x4EF6;&#x683C;&#x5F0F;&#x548C;&#x8BED;&#x6CD5;&#x7ED3;&#x6784;&#xFF0C;&#x4F8B;&#x5982;jsx&#x53D8;&#x6210;wxml</li>
+<li><p>&#x8FD0;&#x884C;&#x65F6;&#xFF1A;&#x5728;&#x4EE3;&#x7801;&#x6267;&#x884C;&#x65F6;&#xFF0C;&#x6846;&#x67B6;&#x63D0;&#x4F9B;&#x4E00;&#x4E2A;&#x7EDF;&#x4E00;&#x7684;&#x4E2D;&#x95F4;&#x5C42;&#xFF0C;&#x6216;&#x8005;&#x53EB;&#x8FD0;&#x884C;&#x65F6;&#x7684;&#x5E93;&#x3002;&#x4E00;&#x65B9;&#x9762;&#x6A21;&#x62DF;&#x6D4F;&#x89C8;&#x5668;&#x73AF;&#x5883;&#xFF0C;&#x53E6;&#x4E00;&#x65B9;&#x9762;&#x4EE3;&#x7406;&#x6240;&#x6709;API&#x8C03;&#x7528;&#xFF0C;&#x62B9;&#x5E73;&#x5404;&#x5E73;&#x53F0;&#x7684;&#x5DEE;&#x5F02;&#x6027;&#x3002;
+&#x8FD8;&#x6709;&#x6700;&#x5173;&#x952E;&#x7684;&#x6E32;&#x67D3;&#x73AF;&#x8282;&#xFF1A;&#x6846;&#x67B6;&#x5728;&#x5185;&#x5B58;&#x4E2D;&#x7EF4;&#x62A4;&#x4E00;&#x5957;&#x865A;&#x62DF;DOM&#xFF0C;&#x7136;&#x540E;&#x901A;&#x8FC7;&#x5E73;&#x53F0;&#x7279;&#x5B9A;&#x7684;&#x6E32;&#x67D3;&#x5668;&#x5C06;&#x865A;&#x62DF;DOM&#x66F4;&#x65B0;&#x5230;&#x5B9E;&#x9645;&#x754C;&#x9762;&#xFF0C;&#x4ECE;&#x800C;&#x5B9E;&#x73B0;&#x201C;&#x4E00;&#x5957;&#x4EE3;&#x7801;&#xFF0C;&#x591A;&#x7AEF;&#x8FD0;&#x884C;&#x201D;&#x3002;</p>
+</li>
+<li><p>&#x4E3A;&#x4F55;&#x79BB;&#x804C;&#xFF1F;
+&#x9519;&#x8BEF;&#x7684;&#x56DE;&#x7B54;&#xFF1A;&#x670B;&#x53CB;&#x63A8;&#x8350;&#x6211;&#x53C2;&#x4E0E;AI&#x5927;&#x6A21;&#x578B;&#x7684;&#x5F00;&#x53D1;&#xFF0C;&#x6211;&#x5C31;&#x8FC7;&#x6765;&#x4E86;&#x3002;
+&#x6B63;&#x786E;&#x7684;&#x56DE;&#x7B54;&#xFF1A;&#x5F53;&#x65F6;&#x4E3A;&#x4E86;&#x66F4;&#x597D;&#x7684;&#x53D1;&#x5C55;&#xFF0C;&#x9009;&#x62E9;&#x53BB;&#x5317;&#x4EAC;&#xFF0C;&#x4F46;&#x662F;23&#x5E74;&#x5E74;&#x4E2D;&#x5A03;&#x5FEB;&#x8981;&#x51FA;&#x751F;&#x4E86;&#xFF0C;&#x7EFC;&#x5408;&#x8003;&#x8651;&#x4E4B;&#x540E;&#x5C31;&#x56DE;&#x6B66;&#x6C49;&#xFF0C;
+ &#x7136;&#x540E;&#x5728;&#x670B;&#x53CB;&#x7684;&#x63A8;&#x8350;&#x4E4B;&#x4E0B;&#x52A0;&#x5165;&#x5230;&#x4E86;&#x8FD9;&#x5BB6;&#x4E3B;&#x63A8;AI/&#x5927;&#x6A21;&#x578B;&#x7684;&#x516C;&#x53F8;&#xFF0C;&#x516C;&#x53F8;&#x7ECF;&#x8425;&#x4E86;3&#x5E74;&#xFF0C;&#x6548;&#x76CA;&#x4E0D;&#x4F73;&#xFF0C;&#x4E8E;&#x4ECA;&#x5E74;&#x5E74;&#x4E2D;&#x62C6;&#x6563;&#x6B66;&#x6C49;&#x5206;&#x90E8;&#xFF0C;&#x4E8E;&#x662F;&#x6211;&#x5931;&#x4E1A;&#x4E86;</p>
+</li>
 </ol>
-<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getUrlParams</span>(<span class="hljs-params">url</span>) </span>{
-  <span class="hljs-keyword">if</span> (!url.includes(<span class="hljs-string">&quot;?&quot;</span>)) {
-    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
-  }
-  <span class="hljs-keyword">var</span> list = url.split(<span class="hljs-string">&quot;?&quot;</span>);
-
-  <span class="hljs-keyword">var</span> params = list[<span class="hljs-number">1</span>];
-  <span class="hljs-keyword">var</span> paramsList = params.split(<span class="hljs-string">&quot;&amp;&quot;</span>);
-  <span class="hljs-keyword">var</span> result = {};
-  paramsList.forEach((item) =&gt; {
-    <span class="hljs-keyword">var</span> temp = item.split(<span class="hljs-string">&quot;=&quot;</span>);
-    result[temp[<span class="hljs-number">0</span>]] = temp[<span class="hljs-number">1</span>];
-  });
-  <span class="hljs-keyword">return</span> result;
-}
-
-getUrlParams(<span class="hljs-string">&quot;https://example.com?name=john&amp;age=30&quot;</span>); <span class="hljs-comment">// {name: &apos;john&apos;, age: &apos;30&apos;}</span>
-
-<span class="hljs-comment">// &#x5B98;&#x65B9;&#x83B7;&#x53D6;url&#x53C2;&#x6570;&#x7684;api</span>
-<span class="hljs-keyword">var</span> url = <span class="hljs-keyword">new</span> URL(<span class="hljs-string">&quot;https://example.com?name=john&amp;age=30&quot;</span>);
-<span class="hljs-keyword">var</span> params = <span class="hljs-keyword">new</span> URLSearchParams(url.search);
-params.get(<span class="hljs-string">&quot;name&quot;</span>); <span class="hljs-comment">// john</span>
-params.has(<span class="hljs-string">&quot;age&quot;</span>); <span class="hljs-comment">// true</span>
-</code></pre>
-<ol>
-<li>&#x5343;&#x5206;&#x4F4D;&#x5206;&#x9694;&#x7B26;
-&#x9898;&#x76EE;&#xFF1A; &#x5B9E;&#x73B0;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#xFF0C;&#x4E3A;&#x6570;&#x5B57;&#x6DFB;&#x52A0;&#x5343;&#x5206;&#x4F4D;&#x5206;&#x9694;&#x7B26;&#x3002;formatNumber(1234567.89) -&gt; &apos;1,234,567.89&apos;&#x3002;
-&#x8003;&#x5BDF;&#x70B9;&#xFF1A; &#x5BF9;&#x6570;&#x5B57;&#x548C;&#x5B57;&#x7B26;&#x4E32;&#x7684;&#x5904;&#x7406;&#x3001;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x4F7F;&#x7528;&#x3002;&#x4E5F;&#x53EF;&#x4EE5;&#x8003;&#x5BDF; Intl.NumberFormat API &#x7684;&#x4E86;&#x89E3;&#x3002;</li>
-</ol>
-<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">formatNumber</span>(<span class="hljs-params">number</span>) </span>{
-  <span class="hljs-keyword">var</span> str = number.toString().split(<span class="hljs-string">&quot;&quot;</span>).reverse().join(<span class="hljs-string">&quot;&quot;</span>);
-  <span class="hljs-keyword">var</span> result = <span class="hljs-string">&quot;&quot;</span>;
-  <span class="hljs-keyword">while</span> (str.length &gt; <span class="hljs-number">3</span>) {
-    <span class="hljs-keyword">var</span> temp = str.match(<span class="hljs-regexp">/\d{3}/</span>);
-    <span class="hljs-keyword">if</span> (temp) {
-      result += temp[<span class="hljs-number">0</span>] + <span class="hljs-string">&quot;,&quot;</span>;
-      str = str.slice(<span class="hljs-number">3</span>);
-    }
-  }
-  result += str;
-  <span class="hljs-keyword">return</span> result.split(<span class="hljs-string">&quot;&quot;</span>).reverse().join(<span class="hljs-string">&quot;&quot;</span>);
-}
-<span class="hljs-built_in">console</span>.log(formatNumber(<span class="hljs-number">123456789</span>)); <span class="hljs-comment">// 123,456,789</span>
-</code></pre>
 
                                 
                                 </section>
@@ -847,12 +819,12 @@ params.has(<span class="hljs-string">&quot;age&quot;</span>); <span class="hljs-
 
             
                 
-                <a href="07.html" class="navigation navigation-prev " aria-label="Previous page: 0.7 面试-编程相关">
+                <a href="12.html" class="navigation navigation-prev " aria-label="Previous page: 1.2 面试-React相关">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="09.html" class="navigation navigation-next " aria-label="Next page: 0.9 面试-编程相关">
+                <a href="14.html" class="navigation navigation-next " aria-label="Next page: 1.4 面试-知乎面试">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -863,7 +835,7 @@ params.has(<span class="hljs-string">&quot;age&quot;</span>); <span class="hljs-
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"0.8 面试-编程相关","level":"1.8.8","depth":2,"next":{"title":"0.9 面试-编程相关","level":"1.8.9","depth":2,"path":"interview/09.md","ref":"interview/09.md","articles":[]},"previous":{"title":"0.7 面试-编程相关","level":"1.8.7","depth":2,"path":"interview/07.md","ref":"interview/07.md","articles":[]},"dir":"ltr"},"config":{"plugins":["code","back-to-top-button"],"styles":{"pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css","website":"styles/website.css"},"pluginsConfig":{"code":{"copyButtons":true},"back-to-top-button":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css","website":"styles/website.css"},"showLevel":false}},"theme":"default","author":"xumeng","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"front-end-examination","links":{"sidebar":{"github":"https://github.com/xumengzi/front-end-examination","xui":"https://docs.xumeng.life/book/"}},"gitbook":"*","description":"考试题库"},"file":{"path":"interview/08.md","mtime":"2025-09-15T08:37:16.227Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2025-09-15T08:44:10.066Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"1.3 面试-京东面试","level":"1.8.13","depth":2,"next":{"title":"1.4 面试-知乎面试","level":"1.8.14","depth":2,"path":"interview/14.md","ref":"interview/14.md","articles":[]},"previous":{"title":"1.2 面试-React相关","level":"1.8.12","depth":2,"path":"interview/12.md","ref":"interview/12.md","articles":[]},"dir":"ltr"},"config":{"plugins":["code","back-to-top-button"],"styles":{"pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css","website":"styles/website.css"},"pluginsConfig":{"code":{"copyButtons":true},"back-to-top-button":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css","website":"styles/website.css"},"showLevel":false}},"theme":"default","author":"xumeng","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"front-end-examination","links":{"sidebar":{"github":"https://github.com/xumengzi/front-end-examination","xui":"https://docs.xumeng.life/book/"}},"gitbook":"*","description":"考试题库"},"file":{"path":"interview/13.md","mtime":"2025-09-15T08:38:47.920Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2025-09-15T08:44:10.066Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
